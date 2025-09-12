@@ -1,0 +1,24 @@
+.header-promo-section {
+  padding: 1rem;
+  border-radius: 9px;
+  background-color: rgba(53, 235, 16, 0.8);
+  background:linear-gradient(10deg,blue,purple);
+  font-weight: bolder;
+  display: inline-block;
+}
+.promo-close-button {
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  float: right;
+}
+
+.header-container h1 {
+  font-size: 2.5rem;
+}
+
+.header-container h3 {
+  font-size: 0.8rem;
+  font-style: italic;
+  font-weight: lighter;
+}

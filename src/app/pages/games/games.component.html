@@ -1,14 +1,12 @@
-<h2>Games</h2>
-
+<app-header-text
+  mainHeaderText="New and trending"
+  subHeaderText="Based on player counts and release date"
+  promoText="Jump-start your library with games from Steam, PlayStation, Xbox or GOG. The more complete your profile is, the better it shows your interests."
+></app-header-text>
 <div class="game-list">
-  <!-- <div class="game-card" *ngFor="let game of games">
-    <img [src]="game.background_image" alt="{{ game.name }}" />
-    <h3>{{ game.name }}</h3>
-    <p>Rating: {{ game.rating }}</p>
-  </div> -->
-  <div class="game-card">
-    <img src="https://via.placeholder.com/300x200" alt="Game 1" />
-    <h3>Game 1</h3>
-    <p>Rating: 4.5</p>
-  </div>
+  @if(!games() || games().length === 0) {
+  <p>No games available.</p>
+  } @else{ @for (game of games(); track $index) {
+  <app-game-card [game]="game" />
+  } }
 </div>
