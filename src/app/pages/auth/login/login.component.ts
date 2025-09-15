@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HeaderTextComponent } from '../../components/header-text/header-text.component';
-import { AuthService } from '../../core/services/auth.service';
-import { onMessage } from '@angular/fire/messaging';
+import { HeaderTextComponent } from '../../../components/header-text/header-text.component';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, HeaderTextComponent],
+  imports: [ReactiveFormsModule, HeaderTextComponent, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

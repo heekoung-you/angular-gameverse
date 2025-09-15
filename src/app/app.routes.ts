@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { GamesComponent } from './pages/games/games.component';
-import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent } from './pages/auth/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'games', pathMatch: 'full' },
@@ -14,6 +15,14 @@ export const routes: Routes = [
       promoText: 'Discover your next favorite game!',
     },
   },
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
+
   { path: '**', component: NotFoundComponent },
 ];
