@@ -1,0 +1,33 @@
+.loginForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.formFieldSet  {
+  display: grid;
+  grid-template-columns: 10rem 20rem;
+  grid-auto-rows: 3rem;
+  justify-content: start;
+  align-items: center;
+  grid-column-gap: 0.5rem;
+  margin: 1rem;
+}
+
+.formFieldSet .error-field {
+  grid-column:  span 2;
+  justify-self: start;
+  color: rgb(151, 8, 8);
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.formFieldSet .invalid {
+  // TODO
+}
+
+.btn__login {
+  margin-top:1rem;
+  margin-left: 1rem;
+  max-width: 30rem;
+}
+

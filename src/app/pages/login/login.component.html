@@ -1,1 +1,32 @@
-<p>login works!</p>
+<div class="loginPageContainer">
+  <app-header-text mainHeaderText="Log in with your email" />
+
+  <form class="loginForm" [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="formFieldSet email">
+      <label for="email">Enter email</label>
+      <input type="text" name="email" id="email" [formControl]="loginForm.controls.email" />
+      @if(emailInValid) {
+      <div class="error-field">
+        <p>Invalid email address</p>
+      </div>
+      }
+    </div>
+
+    <div class="formFieldSet password">
+      <label for="password">Enter Password</label>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        [formControl]="loginForm.controls.password"
+      />
+      @if(passwordInValid) {
+      <div class="error-field">
+        <p>Invalid password address</p>
+      </div>
+      }
+    </div>
+
+    <button class="btn__login" type="submit">Login</button>
+  </form>
+</div>
