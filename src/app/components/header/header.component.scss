@@ -1,0 +1,33 @@
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+  padding: 10px
+}
+
+.header-logo {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.header-logo a {
+  color: azure;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.header-nav-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  text-transform: uppercase;
+  color: azure;
+}
+
+.header-nav-container a {
+
+  color: azure;
+}
+

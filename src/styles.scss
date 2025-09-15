@@ -1,1 +1,87 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --bg-color: #121212;
+  --text-color: #f5f5f5;
+  --card-bg: #1e1e1e;
+  --accent-color: #bb86fc;
+  --accent-hover: #d0aaff;
+  --accent-active: #9c6de0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Quicksand', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Quicksand', sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Global link styles */
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+a:active {
+  color: var(--accent-active);
+}
+
+a:visited {
+  color: var(--accent-color);
+  opacity: 0.8;
+}
+
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+/* Header styling */
+app-header {
+  margin-bottom: 1rem;
+}
+
+/* Footer placeholder */
+footer {
+  margin-top: auto;
+  padding: 1rem;
+  text-align: center;
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.layout {
+  display: flex;
+  flex: 1;
+}
+
+app-sidebar {
+  width: 220px;
+  background-color: var(--card-bg);
+  padding: 1rem;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+}
