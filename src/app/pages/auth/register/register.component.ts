@@ -88,10 +88,9 @@ export class RegisterComponent {
       gender: this.registerForm.value.gender ?? Gender.Other,
     };
 
-    this.registerForm.value.email;
-    const req = this.authService.register(registerUserDto).then((val) => {
+    const user = this.authService.register(registerUserDto).then((val) => {
       console.log(val);
     });
-    console.log(this.registerForm);
+    console.log(user);
   }
 }

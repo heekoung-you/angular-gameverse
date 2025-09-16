@@ -3,6 +3,12 @@ export const environment = {
   rawgApiKey: 'your-dev-key',
   rawgApiUrl: 'https://api.rawg.io/api',
   firebaseConfig: {
-    apiKey: 'your-dev-firebase-key',
+    projectId: 'angular-gameverse-auth',
+    appId: '1:110992817677:web:59728ed565ca6cce199f44',
+    storageBucket: 'angular-gameverse-auth.firebasestorage.app',
+    apiKey: 'app----key',
+    authDomain: 'angular-gameverse-auth.firebaseapp.com',
+    messagingSenderId: '110992817677',
+    measurementId: 'G-6W0W8H9CM0',
   },
 };
