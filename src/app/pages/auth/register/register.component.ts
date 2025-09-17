@@ -14,12 +14,18 @@ import { AuthService } from '../../../core/services/auth.service';
 import { registerUser } from '../../../models/user.model';
 
 function equalValues(control: AbstractControl) {
-  const password = control.get('passwords.password');
-  const confirmPassword = control.get('passwords.confirmPassword');
-  if (password == confirmPassword) {
-    return null;
-  }
-  return { passwordNotEqual: true };
+  const password = control.get('password');
+  const confirmPassword = control.get('confirmPassword');
+
+  // if (password?.touched && password?.dirty && confirmPassword?.touched && confirmPassword?.dirty) {
+  //   if (password.value != confirmPassword.value) {
+  //     return { passwordNotEqual: true };
+  //   }
+  // }
+
+  // return null;
+
+  return password?.value === confirmPassword?.value ? null : { passwordNotEqual: true };
 }
 
 function emailIsUnique(control: AbstractControl) {
@@ -27,7 +33,7 @@ function emailIsUnique(control: AbstractControl) {
   if (control.value !== 'test@abc.de') {
     return of(null);
   }
-  console.log('emailIsUnique validation has error');
+
   return of({ emailNotUnique: true });
 }
 
@@ -67,12 +73,7 @@ export class RegisterComponent {
 
   isControlInvalid(controlName: string): boolean {
     const control = this.registerForm.get(controlName);
-    console.log(controlName, 'isControlInvalid');
     return !!(control?.touched && control?.dirty && control?.invalid);
-  }
-
-  isFormValid() {
-    return this.registerForm.valid;
   }
 
   onSubmit() {
@@ -89,8 +90,9 @@ export class RegisterComponent {
     };
 
     const user = this.authService.register(registerUserDto).then((val) => {
-      console.log(val);
+      // TODO : we save user data into ngrx or behavior subject(rxjs) and change behavior header?
     });
-    console.log(user);
+
+    // TODO : Check if use can be already logged in, if yes redirect to games page?
   }
 }

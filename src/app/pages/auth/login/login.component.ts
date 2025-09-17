@@ -65,8 +65,4 @@ export class LoginComponent {
       this.loginForm.controls.password.invalid
     );
   }
-
-  formInvalid() {
-    return false;
-  }
 }
