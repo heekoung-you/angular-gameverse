@@ -83,10 +83,12 @@
     <p class="control-error">please enter a valid password</p>
     } @if(isControlInvalid("names")){
     <p class="control-error">please enter a Name</p>
+    } @if(serverErrorMsg()){
+    <p class="control-error">{{ serverErrorMsg() }}</p>
     }
   </div>
   <div class="control-row actions">
-    <button type="reset" class="btn reset">Reset</button>
+    <button type="reset" class="btn reset" (click)="reset()">Reset</button>
     <button type="submit" class="btn signup" [disabled]="registerForm.invalid">Sign up</button>
   </div>
 </form>

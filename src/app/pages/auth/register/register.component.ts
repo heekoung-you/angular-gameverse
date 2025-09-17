@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -12,6 +12,7 @@ import { Gender } from '../../../models/user-gender';
 import { UserRole } from '../../../models/user-role';
 import { AuthService } from '../../../core/services/auth.service';
 import { registerUser } from '../../../models/user.model';
+import { Router } from '@angular/router';
 
 function equalValues(control: AbstractControl) {
   const password = control.get('password');
@@ -46,8 +47,9 @@ function emailIsUnique(control: AbstractControl) {
 export class RegisterComponent {
   genderOptions = Object.entries(Gender);
   roleOptions = Object.entries(UserRole);
+  serverErrorMsg = signal<string | undefined>(undefined);
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   registerForm = new FormGroup({
     email: new FormControl('', {
@@ -89,10 +91,19 @@ export class RegisterComponent {
       gender: this.registerForm.value.gender ?? Gender.Other,
     };
 
-    const user = this.authService.register(registerUserDto).then((val) => {
-      // TODO : we save user data into ngrx or behavior subject(rxjs) and change behavior header?
-    });
+    const user = this.authService
+      .register(registerUserDto)
+      .then((val) => {
+        // Success -> Navigate to games page
+        this.router.navigate(['/games']);
+      })
+      .catch((err) => {
+        console.log('Registration Error on Firebase: ', err.code, err.message);
+        this.serverErrorMsg.set(err.message);
+      });
+  }
 
-    // TODO : Check if use can be already logged in, if yes redirect to games page?
+  reset() {
+    this.serverErrorMsg.set(undefined);
   }
 }

@@ -25,9 +25,15 @@ export class AuthService {
   }
 
   async register(userData: registerUser) {
-    const userCredentials = await this.authFacade.createUser(userData.email, userData.password);
-    const user = userCredentials.user;
-    userCredentials.user;
+    const user = await this.authFacade
+      .createUser(userData.email, userData.password)
+      .then((userCredentials: UserCredential) => userCredentials.user);
+
+    const {
+      stsTokenManager: { accessToken, refreshToken, expirationTime },
+    } = user as any;
+
+    this.saveUserToken(accessToken, refreshToken, expirationTime);
 
     await this.authFacade.updateUserProfile(user, {
       displayName: `${userData.firstName} ${userData.lastName}`,
