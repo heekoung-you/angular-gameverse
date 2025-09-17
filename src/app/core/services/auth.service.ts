@@ -1,54 +1,39 @@
 import { Injectable } from '@angular/core';
-import {
-  Auth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-} from '@angular/fire/auth';
-import { doc, Firestore, setDoc } from '@angular/fire/firestore';
-import { from, Observable } from 'rxjs';
-import { Gender } from '../../models/user-gender';
+import { User, UserCredential } from '@angular/fire/auth';
+import { from, map, Observable } from 'rxjs';
 import { registerUser } from '../../models/user.model';
+import { FirebaseAuthFacade } from '../facades/firebase-auth.facade';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private auth: Auth, private firestore: Firestore) {}
+  constructor(private authFacade: FirebaseAuthFacade) {}
 
-  login(email: string, password: string): Observable<any> {
-    const req = signInWithEmailAndPassword(this.auth, email, password).then((userCredential) => {
-      const user = userCredential.user;
-      return user;
-    });
-    console.log('authService-login function called');
-    return from(req);
+  login(email: string, password: string): Observable<User> {
+    // Wrapped firebase calls into facade. - no idea how to unittest for firebase methods.
+    // TODO check later - facade unit test.
+    return from(this.authFacade.signIn(email, password)).pipe(
+      map((userCredential: UserCredential) => userCredential.user)
+    );
   }
 
   saveUserToken(accessToken: string, refreshToken: string, expirationTime: string) {
-    accessToken ?? localStorage.setItem('accessToken', accessToken); // This is not secure
-    refreshToken ?? localStorage.setItem('refreshToken', refreshToken); // This is not secure
-    expirationTime ?? localStorage.setItem('expirationTime', expirationTime); // This is not secure
+    if (accessToken) localStorage.setItem('accessToken', accessToken);
+    if (refreshToken) localStorage.setItem('refreshToken', refreshToken);
+    if (expirationTime) localStorage.setItem('expirationTime', expirationTime);
   }
 
   async register(userData: registerUser) {
-    const userCredentials = await createUserWithEmailAndPassword(
-      this.auth,
-      userData.email,
-      userData.password
-    );
+    const userCredentials = await this.authFacade.createUser(userData.email, userData.password);
     const user = userCredentials.user;
+    userCredentials.user;
 
-    await updateProfile(user, { displayName: `${userData.firstName} ${userData.lastName}` });
-
-    await setDoc(doc(this.firestore, 'users', user.uid), {
-      uid: user.uid,
-      email: user.email,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      createdAt: new Date(),
-      gender: userData.gender ?? Gender.Other,
+    await this.authFacade.updateUserProfile(user, {
+      displayName: `${userData.firstName} ${userData.lastName}`,
     });
+
+    await this.authFacade.updateUserDoc(user, userData);
 
     return user;
   }
