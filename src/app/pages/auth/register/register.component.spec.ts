@@ -4,21 +4,29 @@ import { RegisterComponent } from './register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderTextComponent } from '../../../components/header-text/header-text.component';
 import { AuthService } from '../../../core/services/auth.service';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { initialState } from '../../../store/auth.reducer';
+import { Store } from '@ngrx/store';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
   let authServiceSpy: any;
+  let storeSpy: MockStore;
 
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['register']);
     await TestBed.configureTestingModule({
       imports: [RegisterComponent, ReactiveFormsModule, HeaderTextComponent],
-      providers: [{ provide: AuthService, useValue: { authServiceSpy } }],
+      providers: [
+        { provide: AuthService, useValue: { authServiceSpy } },
+        provideMockStore({ initialState }),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
+    storeSpy = TestBed.inject(Store) as MockStore;
     fixture.detectChanges();
   });
 

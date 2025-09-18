@@ -12,5 +12,6 @@ import { AuthSyncService } from './core/services/auth.sync.service';
 })
 export class App {
   protected readonly title = signal('angular-game-verse-20');
-  private authSync = inject(AuthSyncService); // triggers constructor
+  //private authSync = inject(AuthSyncService); // triggers constructor
+  constructor(private authSync: AuthSyncService) {}
 }

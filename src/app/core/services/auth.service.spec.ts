@@ -43,7 +43,16 @@ describe('AuthService', () => {
   });
 
   it('should register a user and save to Firestore', async () => {
-    const mockUser: User = { uid: 'abc123', email: 'new@example.com' } as User;
+    const mockUser: User = {
+      uid: 'abc123',
+      email: 'new@example.com',
+      stsTokenManager: {
+        accessToken: 'mockAccessToken',
+        refreshToken: 'mockRefreshToken',
+        expirationTime: '9999999999999',
+      },
+    } as any;
+
     const mockUserCredential: UserCredential = { user: mockUser } as UserCredential;
 
     mockFacade.createUser.and.returnValue(Promise.resolve(mockUserCredential));

@@ -3,6 +3,8 @@ import { Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HeaderTextComponent } from '../../../components/header-text/header-text.component';
 import { AuthService } from '../../../core/services/auth.service';
+import { Store } from '@ngrx/store';
+import { loginSuccess } from '../../../store/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +19,7 @@ export class LoginComponent {
   });
 
   private router = inject(Router);
+  private store = inject(Store);
   constructor(private authService: AuthService) {}
 
   login() {
@@ -28,20 +31,17 @@ export class LoginComponent {
 
     this.authService.login(email!, password!).subscribe({
       next: (user) => {
-        console.log('response:', user);
-
-        // save user token information
-        // TODO - Create next TODO for ngRX save user information in shared state.
-        // TODO - create next TODO for router guards.
         const {
           email,
           stsTokenManager: { accessToken, refreshToken, expirationTime },
         } = user as any;
 
-        console.log(email, accessToken, refreshToken, expirationTime);
+        console.log('login action:', email, accessToken);
 
         // Save token information in local storage
         this.authService.saveUserToken(accessToken, refreshToken, expirationTime);
+
+        this.store.dispatch(loginSuccess({ user: user }));
 
         // Redirect to game page
         this.router.navigate(['/games']);

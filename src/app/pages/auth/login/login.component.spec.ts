@@ -7,24 +7,35 @@ import { provideRouter } from '@angular/router';
 import { routes } from '../../../app.routes';
 import { of } from 'rxjs';
 import { Location } from '@angular/common';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { provideStore, Store } from '@ngrx/store';
+import { initialState } from '../../../store/auth.reducer';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authServiceSpy: any;
   let location: Location;
+  let storeSpy: MockStore;
 
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['login', 'saveUserToken']);
 
     await TestBed.configureTestingModule({
       imports: [LoginComponent, ReactiveFormsModule],
-      providers: [{ provide: AuthService, useValue: authServiceSpy }, provideRouter(routes)],
+      providers: [
+        { provide: AuthService, useValue: authServiceSpy },
+        provideRouter(routes),
+        provideMockStore({
+          initialState,
+        }),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     location = TestBed.inject(Location);
+    storeSpy = TestBed.inject(Store) as MockStore;
     fixture.detectChanges();
   });
 
