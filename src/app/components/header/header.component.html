@@ -10,7 +10,17 @@
     </div>
     <nav class="header-nav-container">
       <a class="header-nav-link" routerLink="/games">Games</a>
-      <a class="header-nav-link" routerLink="/login">Login</a>
+      <div class="userMenu">
+        <!--TODO : Create menu come with click - profile / logout etc -->
+        @if(isAuthenticated$ | async; as isAuth ) {
+        <span class="header-nva-user">
+          {{ (user$ | async)?.displayName || (user$ | async)?.email }}
+        </span>
+        <a class="header-nav-link" (click)="logout()">todo-logout</a>
+        }@else {
+        <a class="header-nav-link" routerLink="/login">Login</a>
+        }
+      </div>
     </nav>
   </div>
 </div>

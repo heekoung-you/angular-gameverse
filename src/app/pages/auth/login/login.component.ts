@@ -23,7 +23,6 @@ export class LoginComponent {
     // Proceed login
     // Create login service and subscribe
     // Redirect user to profile(Later) or games page
-    console.log(this.loginForm);
     const email = this.loginForm.controls.email.value;
     const password = this.loginForm.controls.password.value;
 

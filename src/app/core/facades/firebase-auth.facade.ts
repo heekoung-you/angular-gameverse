@@ -1,5 +1,5 @@
 // firebase-auth.facade.ts
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -14,7 +14,11 @@ import { Gender } from '../../models/user-gender';
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseAuthFacade {
-  constructor(private auth: Auth, private fireStore: Firestore) {}
+  /*
+firebase-auth.facade.ts:20 Calling Firebase APIs outside of an Injection context may destabilize your application leading to subtle change-detection and hydration bugs. Find more at
+ */
+  private auth = inject(Auth); // zone-aware - TODO : Ask when to use constructor injector
+  private fireStore = inject(Firestore); // zone-aware
 
   signIn(email: string, password: string): Promise<UserCredential> {
     return signInWithEmailAndPassword(this.auth, email, password);
@@ -37,5 +41,10 @@ export class FirebaseAuthFacade {
       createdAt: new Date(),
       gender: registerData.gender ?? Gender.Other,
     });
+  }
+
+  signOut(): Promise<void> {
+    console.log('signout:authFacade');
+    return this.auth.signOut();
   }
 }

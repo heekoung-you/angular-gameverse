@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -13,18 +13,12 @@ import { UserRole } from '../../../models/user-role';
 import { AuthService } from '../../../core/services/auth.service';
 import { registerUser } from '../../../models/user.model';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { selectIsAuthenticated } from '../../../store/auth.selector';
 
 function equalValues(control: AbstractControl) {
   const password = control.get('password');
   const confirmPassword = control.get('confirmPassword');
-
-  // if (password?.touched && password?.dirty && confirmPassword?.touched && confirmPassword?.dirty) {
-  //   if (password.value != confirmPassword.value) {
-  //     return { passwordNotEqual: true };
-  //   }
-  // }
-
-  // return null;
 
   return password?.value === confirmPassword?.value ? null : { passwordNotEqual: true };
 }
@@ -44,12 +38,20 @@ function emailIsUnique(control: AbstractControl) {
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   genderOptions = Object.entries(Gender);
   roleOptions = Object.entries(UserRole);
   serverErrorMsg = signal<string | undefined>(undefined);
+  store = inject(Store);
 
   constructor(private authService: AuthService, private router: Router) {}
+  ngOnInit(): void {
+    // If user logged in, redirect to home
+    // TODO: Will implement Router Guards
+    if (this.store.select(selectIsAuthenticated)) {
+      this.router.navigate(['/games']);
+    }
+  }
 
   registerForm = new FormGroup({
     email: new FormControl('', {

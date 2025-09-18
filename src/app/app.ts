@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { AuthSyncService } from './core/services/auth.sync.service';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,5 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 })
 export class App {
   protected readonly title = signal('angular-game-verse-20');
+  private authSync = inject(AuthSyncService); // triggers constructor
 }

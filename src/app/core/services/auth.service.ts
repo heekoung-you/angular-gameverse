@@ -43,4 +43,8 @@ export class AuthService {
 
     return user;
   }
+
+  logout(): Promise<void> {
+    return this.authFacade.signOut();
+  }
 }
