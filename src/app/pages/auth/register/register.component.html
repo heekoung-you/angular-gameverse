@@ -1,0 +1,94 @@
+<app-header-text
+  mainHeaderText="Welcome on Board"
+  subHeaderText="We just need a little bit of data from you"
+></app-header-text>
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="control-row">
+    <div class="control">
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" formControlName="email" />
+    </div>
+  </div>
+
+  <div class="control-row" formGroupName="passwords">
+    <div class="control">
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" formControlName="password" />
+    </div>
+
+    <div class="control">
+      <label for="confirm-password">Confirm Password</label>
+      <input
+        id="confirm-password"
+        type="password"
+        name="confirm-password"
+        formControlName="confirmPassword"
+      />
+    </div>
+  </div>
+
+  <div class="control-row" formGroupName="names">
+    <div class="control">
+      <label for="first-name">First Name</label>
+      <input type="text" id="first-name" name="first-name" formControlName="firstName" />
+    </div>
+
+    <div class="control">
+      <label for="last-name">Last Name</label>
+      <input type="text" id="last-name" name="last-name" formControlName="lastName" />
+    </div>
+  </div>
+  <div class="control-row gender">
+    <div class="control">
+      <label for="gender">Gender</label>
+    </div>
+    @for (gender of genderOptions; track $index) {
+    <div class="control gender">
+      <label [for]="'gender-' + $index">{{ gender[0] }}</label>
+      <input
+        type="radio"
+        [id]="'gender-' + $index"
+        name="gender"
+        formControlName="gender"
+        [value]="gender[1]"
+      />
+    </div>
+    }
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="role">What best describes your role?</label>
+      <select id="role" name="role">
+        @for (item of roleOptions; track $index) {
+        <option [value]="item[1]">{{ item[0] }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="control-row">
+    <div class="control">
+      <label for="terms-and-conditions">
+        <input type="checkbox" id="terms-and-conditions" name="terms" />
+        I agree to the terms and conditions
+      </label>
+    </div>
+  </div>
+  <div class="control-row message">
+    @if(isControlInvalid("email")){
+    <p class="control-error">please enter a valid email address</p>
+    } @if(isControlInvalid("passwords")){
+    <p class="control-error">please enter a valid password</p>
+    } @if(isControlInvalid("names")){
+    <p class="control-error">please enter a Name</p>
+    } @if(serverErrorMsg()){
+    <p class="control-error">{{ serverErrorMsg() }}</p>
+    }
+  </div>
+  <div class="control-row actions">
+    <button type="reset" class="btn reset" (click)="reset()">Reset</button>
+    <button type="submit" class="btn signup" [disabled]="registerForm.invalid">Sign up</button>
+  </div>
+</form>
