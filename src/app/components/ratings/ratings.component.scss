@@ -2,9 +2,43 @@
   margin:1rem;
   display: flex;
   justify-content: space-between;
-}
 
+
+}
+.rating-distribution__label {
+  display: flex;
+  flex-direction: row;
+  gap:0.5rem;
+  align-items: center;
+}
+.text {
+  font-size: 0.8rem;
+}
 .count {
   font-style: italic;
   color:grey;
+  font-size: 0.7rem;
 }
+
+.rating-icon {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  &.rating-icon_exceptional {
+    background-color: #4caf50; /* green */
+  }
+
+  &.rating-icon_recommended {
+    background-color: #2e558f; /* blue */
+  }
+
+  &.rating-icon_meh {
+    background-color: #d1df56; /* yellow */
+  }
+
+  &.rating-icon_skip   {
+    background-color: #ee0e06; /* red */
+  }
+
+}
+

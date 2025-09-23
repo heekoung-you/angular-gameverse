@@ -3,9 +3,7 @@
     @for (rating of sortedRatings(); track $index) {
 
     <div class="rating-distribution__label" role="button" tabindex="0">
-      <div
-        class="rating-distribution__label-icon rating-distribution__label-icon_exceptional"
-      ></div>
+      <div class="rating-icon rating-icon_{{ rating.title }}"></div>
       <div
         class="rating rating_text rating-distribution__label-rating"
         [title]="rating.title"
