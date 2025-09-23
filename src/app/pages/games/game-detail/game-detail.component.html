@@ -1,0 +1,32 @@
+<div class="game-detail-container">
+  <div class="overlay">
+    <div
+      class="game-banner"
+      [style.backgroundImage]="
+        'linear-gradient(to bottom, rgba(0,0,0,0) 20%, rgba(0,0,0,1) 100%), url(' +
+        game.background_image +
+        ')'
+      "
+    >
+      <h1 class="game-title">{{ game.name }}</h1>
+    </div>
+
+    <!-- Rating Section -->
+    <app-ratings [ratings]="gameRatings()" />
+
+    <!-- Metadata Section -->
+    <div class="game-metadata">
+      <div><strong>Genres:</strong> Action RPG, Fantasy, Open World</div>
+      <div><strong>Platforms:</strong> PC, PlayStation 5, Xbox Series X</div>
+      <div><strong>Release Date:</strong> {{ game.released | date : 'd MMM, y' }}</div>
+      <div><strong>Updated Date:</strong> {{ game.updated | date : 'd MMM, y' }}</div>
+      <div><strong>Developer:</strong> FromSoftware</div>
+    </div>
+
+    <!-- Image Slider -->
+    <div class="image-slider">TODO: Create new componment for image Slider</div>
+    <div class="date">{{ game.released }}</div>
+    <!-- Game Description -->
+    <div class="game-description" [innerHTML]="game.description"></div>
+  </div>
+</div>
