@@ -4,41 +4,88 @@
   justify-content: space-between;
 
 
-}
-.rating-distribution__label {
-  display: flex;
-  flex-direction: row;
-  gap:0.5rem;
-  align-items: center;
-}
-.text {
-  font-size: 0.8rem;
-}
-.count {
-  font-style: italic;
-  color:grey;
-  font-size: 0.7rem;
+  .text {
+    font-size: 0.8rem;
+  }
+  .count {
+    font-style: italic;
+    color:grey;
+    font-size: 0.7rem;
+  }
+
+  .rating-label{
+    display: flex;
+    gap:0.5rem;
+    align-items: center;
+    padding:0.2rem;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    &.hovered {
+      border:1px solid;
+      //font-weight: bold;
+      filter:contrast(150%);
+    }
+  }
+
+
+  .rating-icon {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    &.rating-icon_exceptional {
+      background-color: #4caf50; /* green */
+    }
+
+    &.rating-icon_recommended {
+      background-color: #2e558f; /* blue */
+    }
+
+    &.rating-icon_meh {
+      background-color: #b6bd5c; /* yellow */
+    }
+
+    &.rating-icon_skip   {
+      background-color: #eb4842;  /* red */
+    }
+  }
+
 }
 
-.rating-icon {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  &.rating-icon_exceptional {
+
+
+.rating-bars {
+  display: flex;
+  height: 2rem;
+  margin:0.5rem;
+  .rating-bar {
+    background:no-repeat;
+    background-size: contain;
+    background-position: left bottom;
+    overflow: hidden;
+  }
+
+  div.hovered {
+    //border:red solid;
+    filter:contrast(200%); // blur(1px); /
+    ///filter:drop-shadow(2px 2px 2px blue);
+    //box-shadow: 1px 1px 1px 1px grey;
+  }
+
+
+  .rating-bar_exceptional {
     background-color: #4caf50; /* green */
   }
 
-  &.rating-icon_recommended {
+  .rating-bar_recommended {
     background-color: #2e558f; /* blue */
   }
 
-  &.rating-icon_meh {
-    background-color: #d1df56; /* yellow */
+  .rating-bar_meh {
+    background-color: #b6bd5c; /* yellow */
   }
 
-  &.rating-icon_skip   {
-    background-color: #ee0e06; /* red */
+  .rating-bar_skip   {
+    background-color: #eb4842; /* red */
   }
-
 }
 
