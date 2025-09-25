@@ -1,5 +1,5 @@
 <div class="game-detail-container">
-  <div class="overlay">
+  <div class="top-section">
     <div
       class="game-banner"
       [style.backgroundImage]="
@@ -13,20 +13,50 @@
 
     <!-- Rating Section -->
     <app-ratings [ratings]="gameRatings()" />
+  </div>
 
-    <!-- Metadata Section -->
-    <div class="game-metadata">
-      <div><strong>Genres:</strong> Action RPG, Fantasy, Open World</div>
-      <div><strong>Platforms:</strong> PC, PlayStation 5, Xbox Series X</div>
-      <div><strong>Release Date:</strong> {{ game.released | date : 'd MMM, y' }}</div>
-      <div><strong>Updated Date:</strong> {{ game.updated | date : 'd MMM, y' }}</div>
-      <div><strong>Developer:</strong> FromSoftware</div>
+  <div class="section main-detail-section">
+    <!-- Game Description -->
+    <div class="game-description">
+      <h3>About</h3>
+      <div class="game-description__content" [innerHTML]="game.description"></div>
     </div>
 
+    <!-- Metadata Section -->
+    <div class="game-metadata" #middleSection>
+      <h3>Game Info</h3>
+      <div class="game-metadata__row">
+        <div class="metatitle">Platforms:</div>
+        @for (item of platformTags; track $index) {
+        <app-tag [tagName]="item" />
+        }
+      </div>
+
+      @if (game.released) {
+      <div class="game-metadata__row">
+        <div class="metatitle">released:</div>
+        <app-tag [tagName]="game.released | date : 'd MMM, y'" />
+      </div>
+      } @if (game.released) {
+      <div class="game-metadata__row">
+        <div class="metatitle">updated:</div>
+        <app-tag [tagName]="game.updated | date : 'd MMM, y'" />
+      </div>
+      } @if (game.reviews_text_count) {
+      <div class="game-metadata__row">
+        <div class="metatitle">reviews:</div>
+        <app-tag [tagName]="game.reviews_text_count" />
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="section game-extra-section">
     <!-- Image Slider -->
-    <div class="image-slider">TODO: Create new componment for image Slider</div>
-    <div class="date">{{ game.released }}</div>
-    <!-- Game Description -->
-    <div class="game-description" [innerHTML]="game.description"></div>
+    @defer (on viewport(middleSection)) {
+    <app-media-gallery [gameId]="gameId()" [mediaList]="screenshots()" />
+    }
+
+    <p>TODO : relate games using game card?</p>
   </div>
 </div>

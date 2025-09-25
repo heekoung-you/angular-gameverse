@@ -1,0 +1,13 @@
+.tag {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  background-color: #2f648f;
+
+  font-size: 0.75rem;
+  border-radius: 12px;
+  margin: 0.2rem;
+  white-space: nowrap;
+  &:hover{
+    filter:brightness(50%);
+  }
+}

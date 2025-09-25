@@ -1,0 +1,23 @@
+<div class="game__screenshots">
+  <h3>Game Images / screenshots</h3>
+  <button class="carousel-arrow left" (click)="scrollCarousel('left')">←</button>
+
+  <div class="game__screenshots-list" #carousel>
+    @for (image of images(); track $index) {
+    <div
+      class="game__screenshots-item"
+      [class.large]="$index === 0"
+      role="button"
+      [tabindex]="$index"
+    >
+      <img
+        [src]="image.image"
+        [title]="gameTitle() + ', image №' + image.id"
+        [alt]="gameTitle() + ', image №' + image.id + ' - RAWG'"
+      />
+    </div>
+    }
+  </div>
+
+  <button class="carousel-arrow right" (click)="scrollCarousel('right')">→</button>
+</div>
