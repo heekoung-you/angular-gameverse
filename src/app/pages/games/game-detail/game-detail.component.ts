@@ -20,7 +20,8 @@ export class GameDetailComponent implements OnInit {
 
   game!: GameSingle;
   gameId = signal('');
-  gameRatings = computed(() => this.game.ratings as Rating[]) || [];
+  gameRatings = computed(() => (this.game?.ratings ?? []) as Rating[]);
+
   platformTags: string[] = [];
 
   screenshots = signal<ScreenShot[]>([]);
@@ -32,6 +33,7 @@ export class GameDetailComponent implements OnInit {
     const apiSub = this.gamesApi.getGameDetail(this.gameId()).subscribe({
       next: (gameResult: GameSingle) => {
         this.game = gameResult;
+
         const platformArray = (this.game.platforms ?? []) as GamePlatformsInner[];
         const platformNames =
           platformArray.map((x) => x.platform?.name).filter((x) => x != undefined) ?? [];

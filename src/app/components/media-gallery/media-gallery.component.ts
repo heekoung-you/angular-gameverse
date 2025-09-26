@@ -43,22 +43,4 @@ export class MediaGalleryComponent implements OnInit {
       }
     }
   }
-
-  scrollLeft() {
-    const container = this.carousel.nativeElement;
-    const itemWidth = container.querySelector('.game__screenshots-item')?.clientWidth ?? 200;
-
-    if (container.scrollLeft <= 0) {
-      // Loop to end
-      container.scrollTo({ left: container.scrollWidth, behavior: 'smooth' });
-    } else {
-      container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
-    }
-  }
-
-  scrollRight() {
-    const itemWidth =
-      this.carousel.nativeElement.querySelector('.game__screenshots-item')?.clientWidth ?? 200;
-    this.carousel.nativeElement.scrollBy({ left: itemWidth, behavior: 'smooth' });
-  }
 }

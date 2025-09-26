@@ -7,6 +7,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { mockGameList } from '../../testing/mock-games';
 import { GamesApiService } from '../../core/services/games-api.service';
+import { provideRouter } from '@angular/router';
 describe('GamesComponent', () => {
   let component: GamesComponent;
   let fixture: ComponentFixture<GamesComponent>;
@@ -18,6 +19,7 @@ describe('GamesComponent', () => {
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
+        provideRouter([]),
         { provide: GamesApiService, useValue: apiSpy },
       ],
     }).compileComponents();

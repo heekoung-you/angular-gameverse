@@ -94,7 +94,7 @@
             ],
             "styles": ["src/styles.scss"],
             "codeCoverage": true,
-            "codeCoverageExclude": ["src/app/api-client/**"]
+            "codeCoverageExclude": ["src/app/api-client/**", "src/app/core/facades/**"]
           }
         }
       }
