@@ -54,9 +54,16 @@
   <div class="section game-extra-section">
     <!-- Image Slider -->
     @defer (on viewport(middleSection)) {
-    <app-media-gallery [gameId]="gameId()" [mediaList]="screenshots()" />
+    <app-media-gallery [gameId]="gameId" [mediaList]="screenshots()" />
     }
 
-    <p>TODO : relate games using game card?</p>
+    <p>TODO : Rebbit posts ?</p>
+    <p>TODO : Video for games ?</p>
+    <p>
+      TODO : related games / suggest games? -> reuse game card + game list component? ( currently
+      has game list page )
+    </p>
   </div>
+
+  <div class="section game-extra-section"></div>
 </div>

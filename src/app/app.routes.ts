@@ -18,10 +18,9 @@ export const routes: Routes = [
     },
   },
   {
-    path: 'games/:id',
+    path: 'games/:gameId',
     component: GameDetailComponent,
   },
-
   {
     path: 'login',
     component: LoginComponent,
