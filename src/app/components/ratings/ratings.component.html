@@ -1,0 +1,40 @@
+<div class="rating-distribution__meta">
+  <div class="rating-bars">
+    @for (rating of sortedRatings(); track $index) {
+    <!-- <img [src]="ratingImages[rating.title]" [alt]="rating.title" class="rating-image" /> -->
+    <div
+      class="rating-bar rating-bar_{{ rating.title }}"
+      [class.hovered]="hoveredRating() === rating.title"
+      (mouseenter)="hoveredRating.set(rating.title)"
+      (mouseleave)="hoveredRating.set(null)"
+      [style.width.%]="rating.percent"
+      [style.background-image]="'url(' + ratingImages[rating.title] + ')'"
+    ></div>
+    }
+  </div>
+
+  <div class="rating-distribution__labels">
+    @for (rating of sortedRatings(); track $index) {
+
+    <div
+      class="rating-label rating-label__{{ rating.title }}"
+      [class.hovered]="hoveredRating() === rating.title"
+      (mouseenter)="hoveredRating.set(rating.title)"
+      (mouseleave)="hoveredRating.set(null)"
+      role="button"
+      tabindex="0"
+    >
+      <div class="rating-icon rating-icon_{{ rating.title }}"></div>
+      <div
+        class="rating rating_text rating-distribution__label-rating"
+        [title]="rating.title"
+        role="button"
+        [tabindex]="$index"
+      >
+        <div class="text">{{ rating.title | titlecase }}</div>
+      </div>
+      <div class="count">{{ rating.count }}</div>
+    </div>
+    }
+  </div>
+</div>

@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import {
   ConfigurationParameters,
   Game,
+  GameSingle,
   GamesList200Response,
+  GamesScreenshotsList200Response,
   GamesService,
 } from '../../api-client';
 import { catchError, map, Observable, of } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +27,13 @@ export class GamesApiService {
         map((res: GamesList200Response) => res.results),
         catchError(() => of([]))
       );
+  }
+
+  getGameDetail(id: string): Observable<GameSingle> {
+    return this.api.gamesRead(id);
+  }
+
+  getScreenshots(id: string): Observable<GamesScreenshotsList200Response> {
+    return this.api.gamesScreenshotsList(id);
   }
 }

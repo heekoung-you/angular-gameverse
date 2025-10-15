@@ -1,0 +1,47 @@
+.game-banner {
+  min-height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  justify-content: end;
+  align-items:end;
+  color: white;
+  text-align:end;
+  border-radius: 5px;
+  .game-title {
+    margin:1rem
+  }
+}
+
+.main-detail-section {
+  display: grid;
+  grid-template-columns:3fr 1fr;
+  gap: 2rem;
+  .game-description {
+    padding: 1rem;
+  }
+
+  .game-metadata {
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
+    .game-metadata__row {
+      display: block;
+      align-items: center;
+      .metatitle {
+        grid-column: 1;
+        font-style: italic;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+
+
+
+.section {
+  margin-bottom: 5rem;
+}

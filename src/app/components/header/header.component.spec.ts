@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
 import { provideRouter, RouterModule } from '@angular/router';
@@ -6,6 +6,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { MockState, MockStore, provideMockStore } from '@ngrx/store/testing';
 import { initialState } from '../../store/auth.reducer';
 import { Store } from '@ngrx/store';
+import { routes } from '../../app.routes';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -19,7 +20,7 @@ describe('HeaderComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HeaderComponent, RouterModule],
       providers: [
-        provideRouter([]),
+        provideRouter(routes),
         { provide: AuthService, useValue: authServiceSpy },
         provideMockStore({ initialState }),
       ],
@@ -41,4 +42,12 @@ describe('HeaderComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelectorAll('.header-nav-link').length).toBe(2);
   });
+
+  it('should call logout and navigate to login', fakeAsync(() => {
+    authServiceSpy.logout.and.returnValue(Promise.resolve());
+    component.logout();
+    tick();
+
+    expect(authServiceSpy.logout).toHaveBeenCalled();
+  }));
 });

@@ -3,6 +3,7 @@ import { GamesApiService } from '../../core/services/games-api.service';
 import { Game } from '../../api-client';
 import { GameCardComponent } from '../../components/game-card/game-card.component';
 import { HeaderTextComponent } from '../../components/header-text/header-text.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-games',

@@ -23,10 +23,10 @@ export class AuthSyncService {
     this.auth.onAuthStateChanged((user) => {
       if (user) {
         const dto = mapUserToDto(user);
-        console.log('Auth state changed: User Logged In', user);
+        //console.log('Auth state changed: User Logged In', user);
         this.store.dispatch(loginSuccess({ user: dto }));
       } else {
-        console.log('Auth state changed: LoggedOut User', user);
+        //console.log('Auth state changed: LoggedOut User', user);
         this.store.dispatch(logout());
       }
     });

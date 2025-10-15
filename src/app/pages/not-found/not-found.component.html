@@ -1,1 +1,13 @@
-<p>not-found works!</p>
+<div class="error-container">
+  <h1>Error {{ state.errorCode || '404' }}</h1>
+  <h2>{{ state.message || 'Page Not Found' }}</h2>
+
+  @if(state.detail) {
+  <div class="error-details">
+    <p>{{ state.detail }}</p>
+  </div>
+
+  }
+
+  <a routerLink="/" class="back-link">← Go back to homepage</a>
+</div>

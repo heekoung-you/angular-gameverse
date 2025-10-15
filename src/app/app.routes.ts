@@ -4,6 +4,7 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { authGuard } from './core/guards/auth.guard';
+import { GameDetailComponent } from './pages/games/game-detail/game-detail.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'games', pathMatch: 'full' },
@@ -15,6 +16,10 @@ export const routes: Routes = [
       description: 'A list of awesome games',
       promoText: 'Discover your next favorite game!',
     },
+  },
+  {
+    path: 'games/:gameId',
+    component: GameDetailComponent,
   },
   {
     path: 'login',

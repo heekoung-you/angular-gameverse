@@ -1,0 +1,69 @@
+<div class="game-detail-container">
+  <div class="top-section">
+    <div
+      class="game-banner"
+      [style.backgroundImage]="
+        'linear-gradient(to bottom, rgba(0,0,0,0) 20%, rgba(0,0,0,1) 100%), url(' +
+        game.background_image +
+        ')'
+      "
+    >
+      <h1 class="game-title">{{ game.name }}</h1>
+    </div>
+
+    <!-- Rating Section -->
+    <app-ratings [ratings]="gameRatings()" />
+  </div>
+
+  <div class="section main-detail-section">
+    <!-- Game Description -->
+    <div class="game-description">
+      <h3>About</h3>
+      <div class="game-description__content" [innerHTML]="game.description"></div>
+    </div>
+
+    <!-- Metadata Section -->
+    <div class="game-metadata" #middleSection>
+      <h3>Game Info</h3>
+      <div class="game-metadata__row">
+        <div class="metatitle">Platforms:</div>
+        @for (item of platformTags; track $index) {
+        <app-tag [tagName]="item" />
+        }
+      </div>
+
+      @if (game.released) {
+      <div class="game-metadata__row">
+        <div class="metatitle">released:</div>
+        <app-tag [tagName]="game.released | date : 'd MMM, y'" />
+      </div>
+      } @if (game.released) {
+      <div class="game-metadata__row">
+        <div class="metatitle">updated:</div>
+        <app-tag [tagName]="game.updated | date : 'd MMM, y'" />
+      </div>
+      } @if (game.reviews_text_count) {
+      <div class="game-metadata__row">
+        <div class="metatitle">reviews:</div>
+        <app-tag [tagName]="game.reviews_text_count" />
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="section game-extra-section">
+    <!-- Image Slider -->
+    @defer (on viewport(middleSection)) {
+    <app-media-gallery [gameId]="gameId" [mediaList]="screenshots()" />
+    }
+
+    <p>TODO : Rebbit posts ?</p>
+    <p>TODO : Video for games ?</p>
+    <p>
+      TODO : related games / suggest games? -> reuse game card + game list component? ( currently
+      has game list page )
+    </p>
+  </div>
+
+  <div class="section game-extra-section"></div>
+</div>
