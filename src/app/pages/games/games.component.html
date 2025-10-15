@@ -1,12 +1,33 @@
-<app-header-text
-  mainHeaderText="New and trending"
-  subHeaderText="Based on player counts and release date"
-  promoText="Jump-start your library with games from Steam, PlayStation, Xbox or GOG. The more complete your profile is, the better it shows your interests."
-></app-header-text>
-<div class="game-list">
-  @if(!games() || games().length === 0) {
-  <p>No games available.</p>
-  } @else{ @for (game of games(); track $index) {
-  <app-game-card [game]="game" />
-  } }
+<app-header-text mainHeaderText="New and trending" subHeaderText="Based on player counts and release date"
+  promoText="Jump-start your library with games from Steam, PlayStation, Xbox or GOG. The more complete your profile is, the better it shows your interests."></app-header-text>
+<div class="games-page-container">
+
+
+  <div class="game-list">
+    @if(!games() || games().length === 0)
+    {
+      <p>No games available.</p>
+    }
+    @else
+    {
+      @for (game of games(); track $index) {
+        <app-game-card [game]="game" />
+      }
+    }
+
+    @if(hasError()){
+      <div class="error-message">
+        <p>Ops! Something unexpected results ....</p>
+        <button class="retry-button" (click)="loadGames()">Try Again</button>
+      </div>
+    }
+
+    @if(isLoading()) {
+      <div class="loader-wrapper">
+        <div class="loader"></div>
+      </div>
+    }
+
+    <div class="scroll-trigger" #scrollTrigger></div>
+  </div>
 </div>
