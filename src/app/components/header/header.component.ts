@@ -19,14 +19,13 @@ export class HeaderComponent {
   user$ = this.store.select(selectUser);
 
   logout() {
-    console.log('logout triggered');
     this.authService
       .logout()
       .then(() => {
         this.router.navigate(['/login']); // or redirect to home/games
       })
       .catch((error) => {
-        console.log('signOutError:', error);
+        console.error('GameVerse signOutError on HeaderComponent:', error);
       });
   }
 }

@@ -14,6 +14,17 @@ describe('HeaderComponent', () => {
   let authServiceSpy: any;
   let storeSpy: any;
 
+  const mockAuthState = {
+    auth: {
+      isAuthenticated: true,
+      user: {
+        id: 1,
+        username: 'testuser',
+        email: 'test@example.com',
+      },
+    },
+  };
+
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['logout']);
 
@@ -22,7 +33,7 @@ describe('HeaderComponent', () => {
       providers: [
         provideRouter(routes),
         { provide: AuthService, useValue: authServiceSpy },
-        provideMockStore({ initialState }),
+        provideMockStore({ initialState: mockAuthState }),
       ],
     }).compileComponents();
 
@@ -46,8 +57,22 @@ describe('HeaderComponent', () => {
   it('should call logout and navigate to login', fakeAsync(() => {
     authServiceSpy.logout.and.returnValue(Promise.resolve());
     component.logout();
+    fixture.detectChanges();
     tick();
-
     expect(authServiceSpy.logout).toHaveBeenCalled();
+  }));
+
+  it('it should handle logout error', fakeAsync(() => {
+    const consoleErrorSpy = spyOn(console, 'error');
+    const mockError = new Error('Logout failed');
+    authServiceSpy.logout.and.returnValue(Promise.reject(mockError));
+    component.logout();
+    fixture.detectChanges();
+    tick();
+    expect(authServiceSpy.logout).toHaveBeenCalled();
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      'GameVerse signOutError on HeaderComponent:',
+      mockError
+    );
   }));
 });

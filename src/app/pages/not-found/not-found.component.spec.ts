@@ -41,13 +41,20 @@ describe('NotFoundComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create and receive state if navigate has state params', fakeAsync(() => {
-    router.navigate(['/not-found'], { state: mockErrorState });
+  it('should have default state if no navigation state', () => {
+    const nav = router.currentNavigation();
+    console.log(nav?.extras?.state);
+    // default state
+    expect(component.state.errorCode).toEqual(0);
+    expect(component.state.message).toEqual('Unknown error');
+  });
+
+  xit('should create and receive state if navigate has state params', fakeAsync(() => {
+    router.navigate(['/not-found']);
     fixture.detectChanges();
     tick(); // flush navigation
 
     // DO NOT CLEAR IF I CAN TEST with navigate error or just set state for this?
-    pending();
     const nav = router.currentNavigation();
     console.log(nav?.extras?.state);
     expect(nav?.extras?.state).toEqual(mockErrorState);
