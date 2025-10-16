@@ -3,6 +3,22 @@
 <div class="games-page-container">
 
 
+  <div class="game-genres-wrapper">
+    <div #genreContainer class="game-genres" [class.expended]="isGenresExpanded()">
+      @for(genre of genres(); track $index) {
+        <button class="genre-button" (click)="onGenreSelect(genre)" [class.selected]="selectedGenre() === genre.slug">
+          {{ genre.name }}
+        </button>
+      }
+    </div>
+    <button class="toggle-button" (click)="toggleGenres()">
+      {{ isGenresExpanded() ? 'Show Less' : 'Show More' }}
+    </button>
+
+
+  </div>
+
+
   <div class="game-list">
     @if(!games() || games().length === 0)
     {
@@ -18,7 +34,7 @@
     @if(hasError()){
       <div class="error-message">
         <p>Ops! Something unexpected results ....</p>
-        <button class="retry-button" (click)="loadGames()">Try Again</button>
+        <button class="retry-button" (click)="loadGames(this.selectedGenre(), false)">Try Again</button>
       </div>
     }
 

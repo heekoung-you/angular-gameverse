@@ -6,6 +6,50 @@
   padding: 1rem;
 
 }
+.game-genres-wrapper{
+  display: inline-block;
+  .game-genres {
+    display: inline-block;
+    margin: 0.5rem 0 0 0;
+    max-height: 3rem;
+    overflow: hidden;
+    &.expended {
+      max-height: none;
+    }
+
+    .genre-button{
+      background-color: #ff00aa1a;
+      font-size: small;
+      margin: 0.5rem;
+      &.selected {
+        background-color: #9c0a6b;
+        color: white;
+      }
+      &:hover {
+        background-color: #771032;
+        opacity: 1;
+        color: white;
+      }
+    }
+  }
+
+  .toggle-button {
+    margin-top: 0;
+    float: right;
+    background-color: #0c0c0c1a;
+    font-size: small;
+    font-style: italic;
+    font-weight: lighter;
+    margin: 0.5rem;
+    &:hover {
+      opacity: 1;
+      font-weight: normal;
+    }
+  }
+
+}
+
+
 .loader-wrapper {
   position: relative;
   width: 80%;
