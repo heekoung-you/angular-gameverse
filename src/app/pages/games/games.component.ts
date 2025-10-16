@@ -61,7 +61,6 @@ export class GamesComponent implements OnInit, AfterViewInit {
   loadGames(genre: string | undefined, hardReload: boolean = false) {
     if (hardReload) {
       this.pageNumber.set(1);
-      //this.games.set([]);
     }
 
     const games$ = this.gamesApiService.getGames({
@@ -77,6 +76,7 @@ export class GamesComponent implements OnInit, AfterViewInit {
     const sub = games$.subscribe({
       next: (games) => {
         this.games.update((value) => {
+          // Hard reload will replace the games, otherwise append to existing list - example using from selecting new filter like select tag(genre)
           if (hardReload) {
             return [...games];
           } else {
@@ -85,28 +85,9 @@ export class GamesComponent implements OnInit, AfterViewInit {
         });
         this.pageNumber.set(nextPage);
         this.isLoading.set(false);
-        console.log(
-          'loadGames called, genre:',
-          genre,
-          ', hardReload:',
-          hardReload,
-          ', pageNumber:',
-          this.pageNumber(),
-          ', games loaded:',
-          games.length,
-          'Game names',
-          games.map((g) => g.name).join(', ')
-        );
       },
       error: (error) => {
-        //console.error('Error loading games:', error);
-        //this.games.set([]);
-        console.log(
-          'Error loading games: pageNumber:',
-          this.pageNumber(),
-          ',games:',
-          this.games().length
-        );
+        console.error('Error loading games:', error);
         this.hasError.set(true);
         this.isLoading.set(false);
       },
@@ -121,11 +102,11 @@ export class GamesComponent implements OnInit, AfterViewInit {
     const genres$ = this.gamesApiService.getGenres();
     const sub = genres$.subscribe({
       next: (genres) => {
-        console.log('Loaded genres:', genres);
         this.genres.set(genres);
       },
       error: (error) => {
         console.error('Error loading genres:', error);
+        // this.hasError.set(true); // not critical error, just don't show genres
       },
     });
 
@@ -175,6 +156,7 @@ export class GamesComponent implements OnInit, AfterViewInit {
     this.observer.observe(this.scrollTrigger().nativeElement);
   }
 
+  // Check if genre buttons overflow container - will be observed from resize observer
   private setupGenreOverflowCheck() {
     const container = this.genreContainer().nativeElement;
     const checkOverflow = () => {
@@ -195,6 +177,7 @@ export class GamesComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // toggle genre list expand/collapse
   toggleGenres() {
     this.isGenresExpanded.set(!this.isGenresExpanded());
   }
