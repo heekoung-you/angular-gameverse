@@ -14,6 +14,8 @@ import { GamesApiService } from '../../core/services/games-api.service';
 import { Game, Genre } from '../../api-client';
 import { GameCardComponent } from '../../components/game-card/game-card.component';
 import { HeaderTextComponent } from '../../components/header-text/header-text.component';
+import { catchError, finalize, of, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-games',
@@ -63,56 +65,62 @@ export class GamesComponent implements OnInit, AfterViewInit {
       this.pageNumber.set(1);
     }
 
-    const games$ = this.gamesApiService.getGames({
-      pageNumber: this.pageNumber(),
-      pageSize: 5,
-      genre,
-    });
-
     this.isLoading.set(true);
     this.hasError.set(false);
     const nextPage = this.pageNumber() + 1;
 
-    const sub = games$.subscribe({
-      next: (games) => {
-        this.games.update((value) => {
-          // Hard reload will replace the games, otherwise append to existing list - example using from selecting new filter like select tag(genre)
-          if (hardReload) {
-            return [...games];
-          } else {
-            return [...value, ...games];
-          }
-        });
-        this.pageNumber.set(nextPage);
-        this.isLoading.set(false);
-      },
-      error: (error) => {
-        console.error('Error loading games:', error);
-        this.hasError.set(true);
-        this.isLoading.set(false);
-      },
-    });
+    this.gamesApiService
+      .getGames({
+        pageNumber: this.pageNumber(),
+        pageSize: 5,
+        genre,
+      })
+      .pipe(
+        tap((games) => {
+          this.games.update((value) => {
+            // Hard reload will replace the games, otherwise append to existing list - example using from selecting new filter like select tag(genre)
+            if (hardReload) {
+              return [...games];
+            } else {
+              return [...value, ...games];
+            }
+          });
 
-    this.destroyRef.onDestroy(() => {
-      sub.unsubscribe();
-    });
+          // on success, increase the page number for next load
+          this.pageNumber.set(nextPage);
+        }),
+        catchError((err) => {
+          console.error(
+            'Error loading games:',
+            '\n pageNumber:',
+            this.pageNumber(),
+            '\n gamesLoaded:',
+            this.games().length,
+            '\n error:',
+            err
+          );
+
+          this.hasError.set(true);
+          return [of([])];
+        }),
+        finalize(() => this.isLoading.set(false)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
   }
 
   loadGenres() {
-    const genres$ = this.gamesApiService.getGenres();
-    const sub = genres$.subscribe({
-      next: (genres) => {
-        this.genres.set(genres);
-      },
-      error: (error) => {
-        console.error('Error loading genres:', error);
-        // this.hasError.set(true); // not critical error, just don't show genres
-      },
-    });
-
-    this.destroyRef.onDestroy(() => {
-      sub.unsubscribe();
-    });
+    this.gamesApiService
+      .getGenres()
+      .pipe(
+        tap((genres) => this.genres.set(genres)),
+        catchError((err) => {
+          console.error('Error loading genres:', err);
+          return of([]);
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
   }
 
   onGenreSelect(genre: Genre) {
