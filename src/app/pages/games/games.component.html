@@ -1,9 +1,15 @@
-<app-header-text mainHeaderText="New and trending" subHeaderText="Based on player counts and release date"
-  promoText="Jump-start your library with games from Steam, PlayStation, Xbox or GOG. The more complete your profile is, the better it shows your interests."></app-header-text>
+@if(loadType()==='ALL'){
+  <app-header-text mainHeaderText="New and trending" subHeaderText="Based on player counts and release date"
+    promoText="Jump-start your library with games from Steam, PlayStation, Xbox or GOG. The more complete your profile is, the better it shows your interests."></app-header-text>
+}@else {
+  <app-header-text [mainHeaderText]="'Games like ' + sourceGameTitle()"
+    subHeaderText="Inspired by similar gameplay, themes, and fan favorites" />
+}
+
 <div class="games-page-container">
+  <p> you are seeing now {{games().length}} of games </p>
 
-
-  <div class="game-genres-wrapper">
+  <div class="game-genres-wrapper" [class.hidden]="loadType() ==='SUGGESTED'">
     <div #genreContainer class="game-genres" [class.expended]="isGenresExpanded()">
       @for(genre of genres(); track $index) {
         <button class="genre-button" (click)="onGenreSelect(genre)" [class.selected]="selectedGenre() === genre.slug">
@@ -14,8 +20,6 @@
     <button class="toggle-button" (click)="toggleGenres()">
       {{ isGenresExpanded() ? 'Show Less' : 'Show More' }}
     </button>
-
-
   </div>
 
 
@@ -44,6 +48,16 @@
       </div>
     }
 
+
     <div class="scroll-trigger" #scrollTrigger></div>
+
+
+    @if(!isLoading() && !hasError()) {
+      <div class="load-more-wrapper">
+        <button class="load-more-button" (click)="loadGames(selectedGenre(), false)">
+          Load More
+        </button>
+      </div>
+    }
   </div>
 </div>

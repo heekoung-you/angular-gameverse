@@ -1,9 +1,10 @@
 import {
   AfterViewInit,
   Component,
+  computed,
   DestroyRef,
-  effect,
   ElementRef,
+  effect,
   inject,
   input,
   OnInit,
@@ -14,8 +15,11 @@ import { GamesApiService } from '../../core/services/games-api.service';
 import { Game, Genre } from '../../api-client';
 import { GameCardComponent } from '../../components/game-card/game-card.component';
 import { HeaderTextComponent } from '../../components/header-text/header-text.component';
-import { catchError, finalize, of, tap } from 'rxjs';
+import { catchError, filter, finalize, of, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+
+type GameListType = 'ALL' | 'SUGGESTED';
 
 @Component({
   selector: 'app-games',
@@ -27,11 +31,15 @@ export class GamesComponent implements OnInit, AfterViewInit {
   private gamesApiService = inject(GamesApiService);
   private destroyRef = inject(DestroyRef);
   private observer!: IntersectionObserver;
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
 
   // page input for normal title/description/promo text
   title = input<string>();
   description = input<string>();
   promoText = input<string>();
+
+  loadType = signal<GameListType>('ALL');
 
   // signals values for page state management
   pageNumber = signal<number>(1);
@@ -41,17 +49,39 @@ export class GamesComponent implements OnInit, AfterViewInit {
   genres = signal<Genre[]>([]);
   selectedGenre = signal<string | undefined>(undefined);
   isGenresExpanded = signal<boolean>(false);
-
+  sourceGameId = signal<string | undefined>(undefined);
+  sourceGameTitle = signal<string | undefined>(undefined);
   // scrolltrigger template reference variable - for infinite scroll load more games
   scrollTrigger = viewChild.required<ElementRef<HTMLDivElement>>('scrollTrigger');
 
   // genre container to find out if any overflow tags there
   genreContainer = viewChild.required<ElementRef<HTMLDivElement>>('genreContainer');
   hasGenreOverflow = signal(false);
+  showGenre = computed(() => {
+    return this.loadType() === 'SUGGESTED' ? false : true;
+  });
 
   ngOnInit(): void {
-    this.loadGames(undefined, true);
+    // Load games depends on router query params
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const gameId = params['gameId'];
+      const type = params['type']?.toUpperCase();
+
+      this.sourceGameId.set(gameId);
+      this.sourceGameTitle.set(params['title']);
+      this.loadType.set(type === 'SUGGESTED' && gameId ? 'SUGGESTED' : 'ALL');
+      this.loadGames(undefined, true);
+    });
+
     this.loadGenres();
+
+    // this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+    //   const queryParams = this.activatedRoute.snapshot.queryParams;
+    //   this.sourceGameId.set(queryParams['gameId']);
+    //   const type = queryParams['type'].toUpperCase();
+    //   this.loadType.set(type === 'SUGGESTED' && this.sourceGameId() ? 'SUGGESTED' : 'ALL');
+    //   this.loadGames(undefined, true);
+    // });
   }
 
   ngAfterViewInit(): void {
@@ -69,12 +99,23 @@ export class GamesComponent implements OnInit, AfterViewInit {
     this.hasError.set(false);
     const nextPage = this.pageNumber() + 1;
 
-    this.gamesApiService
-      .getGames({
-        pageNumber: this.pageNumber(),
-        pageSize: 5,
-        genre,
-      })
+    const gameApi$ =
+      this.loadType().toUpperCase() === 'SUGGESTED' && this.sourceGameId()
+        ? this.gamesApiService.getGamesSuggested({
+            gameId: this.sourceGameId()!,
+            pageNumber: this.pageNumber(),
+            pageSize: 5,
+          })
+        : this.gamesApiService.getGames({ pageNumber: this.pageNumber(), pageSize: 5, genre });
+
+    // this.gamesApiService
+    //   .getGames({
+    //     pageNumber: this.pageNumber(),
+    //     pageSize: 5,
+    //     genre,
+    //   })
+
+    gameApi$
       .pipe(
         tap((games) => {
           this.games.update((value) => {
@@ -139,18 +180,13 @@ export class GamesComponent implements OnInit, AfterViewInit {
     // TODO : need to learn more about this section
     const options = {
       root: null, //document.querySelector('#game-list'),
-      rootMargin: '0px',
-      scrollMargin: '0px',
       threshold: 1.0,
     };
 
     this.observer = new IntersectionObserver((entries) => {
-      if (
-        entries[0].isIntersecting &&
-        !this.isLoading() &&
-        !this.hasError() &&
-        this.pageNumber() > 1
-      ) {
+      const isVisible = entries[0].isIntersecting;
+
+      if (isVisible && !this.isLoading() && !this.hasError() && this.pageNumber() > 1) {
         //this.pageNumber.set(this.pageNumber() + 1); <- move this logic after successful called from load games - more reliable if error happens.
         console.log('Loading more games, page:', this.pageNumber());
 

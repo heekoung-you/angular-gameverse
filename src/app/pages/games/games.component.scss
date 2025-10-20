@@ -8,6 +8,9 @@
 }
 .game-genres-wrapper{
   display: inline-block;
+  &.hidden {
+    display: none !important;
+  }
   .game-genres {
     display: inline-block;
     margin: 0.5rem 0 0 0;
@@ -80,4 +83,22 @@
   font-weight: bold;
   text-align: center;
   margin-top: 2rem;
+}
+
+.scroll-trigger {
+  height: 1px;
+  width: 100%;
+}
+
+.load-more-wrapper {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.load-more-button {
+  background-color: #44474e;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
 }
