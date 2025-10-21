@@ -13,9 +13,29 @@
   float: right;
 }
 
-.header-container h1 {
-  font-size: 2.5rem;
+.mainSection {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  gap: 0.5rem;
+
+
+  h1 {
+    font-size: 1.8rem;
+
+  }
+
+  mat-icon {
+    //flex-shrink: 0;
+    cursor: pointer;
+    &:hover {
+      color: #2196f3; // highlight color on hover
+      transform: scale(1.2); // optional: slight zoom
+    }
+  }
 }
+
 
 .header-container h3 {
   font-size: 0.8rem;

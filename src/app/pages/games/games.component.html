@@ -1,8 +1,8 @@
 @if(loadType()==='ALL'){
-  <app-header-text mainHeaderText="New and trending" subHeaderText="Based on player counts and release date"
+  <app-header-text [mainHeaderText]="inputHeaderForGameTitle()" subHeaderText="Based on player counts and release date"
     promoText="Jump-start your library with games from Steam, PlayStation, Xbox or GOG. The more complete your profile is, the better it shows your interests."></app-header-text>
 }@else {
-  <app-header-text [mainHeaderText]="'Games like ' + sourceGameTitle()"
+  <app-header-text [mainHeaderText]="inputHeaderForGameTitle()" iconName="cancel" redirectLink="/games"
     subHeaderText="Inspired by similar gameplay, themes, and fan favorites" />
 }
 

@@ -4,7 +4,6 @@ import {
   computed,
   DestroyRef,
   ElementRef,
-  effect,
   inject,
   input,
   OnInit,
@@ -15,9 +14,9 @@ import { GamesApiService } from '../../core/services/games-api.service';
 import { Game, Genre } from '../../api-client';
 import { GameCardComponent } from '../../components/game-card/game-card.component';
 import { HeaderTextComponent } from '../../components/header-text/header-text.component';
-import { catchError, filter, finalize, of, tap } from 'rxjs';
+import { catchError, finalize, of, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 type GameListType = 'ALL' | 'SUGGESTED';
 
@@ -32,13 +31,11 @@ export class GamesComponent implements OnInit, AfterViewInit {
   private destroyRef = inject(DestroyRef);
   private observer!: IntersectionObserver;
   private activatedRoute = inject(ActivatedRoute);
-  private router = inject(Router);
 
   // page input for normal title/description/promo text
   title = input<string>();
   description = input<string>();
   promoText = input<string>();
-
   loadType = signal<GameListType>('ALL');
 
   // signals values for page state management
@@ -51,6 +48,13 @@ export class GamesComponent implements OnInit, AfterViewInit {
   isGenresExpanded = signal<boolean>(false);
   sourceGameId = signal<string | undefined>(undefined);
   sourceGameTitle = signal<string | undefined>(undefined);
+  inputHeaderForGameTitle = computed(() => {
+    return this.loadType() === 'SUGGESTED' && this.sourceGameTitle()
+      ? //? `Games similar to <span class='highlight-title'>"${this.sourceGameTitle()}" </span>`
+        `Games like <b>"${this.sourceGameTitle()}"</b>`
+      : this.title() || 'All Games';
+  });
+
   // scrolltrigger template reference variable - for infinite scroll load more games
   scrollTrigger = viewChild.required<ElementRef<HTMLDivElement>>('scrollTrigger');
 
@@ -74,14 +78,6 @@ export class GamesComponent implements OnInit, AfterViewInit {
     });
 
     this.loadGenres();
-
-    // this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-    //   const queryParams = this.activatedRoute.snapshot.queryParams;
-    //   this.sourceGameId.set(queryParams['gameId']);
-    //   const type = queryParams['type'].toUpperCase();
-    //   this.loadType.set(type === 'SUGGESTED' && this.sourceGameId() ? 'SUGGESTED' : 'ALL');
-    //   this.loadGames(undefined, true);
-    // });
   }
 
   ngAfterViewInit(): void {
@@ -99,6 +95,7 @@ export class GamesComponent implements OnInit, AfterViewInit {
     this.hasError.set(false);
     const nextPage = this.pageNumber() + 1;
 
+    // Depends on the type of game list to load from all games or suggested games
     const gameApi$ =
       this.loadType().toUpperCase() === 'SUGGESTED' && this.sourceGameId()
         ? this.gamesApiService.getGamesSuggested({
@@ -107,13 +104,6 @@ export class GamesComponent implements OnInit, AfterViewInit {
             pageSize: 5,
           })
         : this.gamesApiService.getGames({ pageNumber: this.pageNumber(), pageSize: 5, genre });
-
-    // this.gamesApiService
-    //   .getGames({
-    //     pageNumber: this.pageNumber(),
-    //     pageSize: 5,
-    //     genre,
-    //   })
 
     gameApi$
       .pipe(

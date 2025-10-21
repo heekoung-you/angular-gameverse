@@ -1,11 +1,18 @@
 <div class="header-container">
-  <h1 class="header-text">{{ mainHeaderText() }}</h1>
-  @if(subHeaderText()) {
-  <h3 class="sub-header-text">{{ subHeaderText() }}</h3>
-  } @if(promoText() && ! hidePromo()){
-  <div class="header-promo-section">
-    <div class="promo-close-button" (click)="onHidePromo()">&#10005;</div>
-    <p>{{ promoText() }}</p>
+  <div class="mainSection">
+    <h1 class="header-text" [innerHTML]="mainHeaderText()"></h1>
+    @if(iconName() && redirectLink()) {
+      <mat-icon (click)="redirectPage()">{{ iconName() }}</mat-icon>
+    } @else if(iconName() && !redirectLink()) {
+      <mat-icon>{{ iconName() }}</mat-icon>
+    }
   </div>
+  @if(subHeaderText()) {
+    <h3 class="sub-header-text">{{ subHeaderText() }}</h3>
+  } @if(promoText() && ! hidePromo()){
+    <div class="header-promo-section">
+      <div class="promo-close-button" (click)="onHidePromo()">&#10005;</div>
+      <p>{{ promoText() }}</p>
+    </div>
   }
 </div>
