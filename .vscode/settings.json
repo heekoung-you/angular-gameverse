@@ -2,5 +2,12 @@
   "liveServer.settings.port": 5501,
   "cSpell.words": [
     "firestore"
-  ]
+  ],
+  "html.format.templating": [
+   "angular"
+  ],
+ "html.format.indentHandlebars": true,
+  "prettier.htmlWhitespaceSensitivity": "ignore",
+  "eslint.enable": true,
+"eslint.validate": ["typescript", "html"]
 }
