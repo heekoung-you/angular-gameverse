@@ -33,13 +33,14 @@ export class LoginComponent {
       next: (user) => {
         const {
           email,
+          uid,
           stsTokenManager: { accessToken, refreshToken, expirationTime },
         } = user as any;
 
         console.log('login action:', email, accessToken);
 
         // Save token information in local storage
-        this.authService.saveUserToken(accessToken, refreshToken, expirationTime);
+        this.authService.saveUserToken(accessToken, refreshToken, expirationTime, user.uid);
 
         this.store.dispatch(loginSuccess({ user: user }));
 

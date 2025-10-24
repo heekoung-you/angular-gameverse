@@ -17,6 +17,7 @@ import { HeaderTextComponent } from '../../components/header-text/header-text.co
 import { catchError, finalize, of, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { UserCollectionService } from '../../core/services/user.collection.service';
 
 type GameListType = 'ALL' | 'SUGGESTED';
 
@@ -31,6 +32,7 @@ export class GamesComponent implements OnInit, AfterViewInit {
   private destroyRef = inject(DestroyRef);
   private observer!: IntersectionObserver;
   private activatedRoute = inject(ActivatedRoute);
+  private userCollectionService = inject(UserCollectionService);
 
   // page input for normal title/description/promo text
   title = input<string>();
@@ -39,6 +41,7 @@ export class GamesComponent implements OnInit, AfterViewInit {
   loadType = signal<GameListType>('ALL');
 
   // signals values for page state management
+  currentUid = signal<string | undefined>(undefined);
   pageNumber = signal<number>(1);
   isLoading = signal<boolean>(false);
   hasError = signal<boolean>(false);
@@ -65,7 +68,11 @@ export class GamesComponent implements OnInit, AfterViewInit {
     return this.loadType() === 'SUGGESTED' ? false : true;
   });
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    // set current uid
+    const uid = await this.userCollectionService.getCurrentUidFromLocalStorage();
+    this.currentUid.set(uid);
+
     // Load games depends on router query params
     this.activatedRoute.queryParams.subscribe((params) => {
       const gameId = params['gameId'];
@@ -86,7 +93,7 @@ export class GamesComponent implements OnInit, AfterViewInit {
     this.setupGenreOverflowCheck();
   }
 
-  loadGames(genre: string | undefined, hardReload: boolean = false) {
+  loadGames(genre: string | undefined, hardReload = false) {
     if (hardReload) {
       this.pageNumber.set(1);
     }
@@ -128,14 +135,14 @@ export class GamesComponent implements OnInit, AfterViewInit {
             '\n gamesLoaded:',
             this.games().length,
             '\n error:',
-            err
+            err,
           );
 
           this.hasError.set(true);
           return [of([])];
         }),
         finalize(() => this.isLoading.set(false)),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
   }
@@ -149,7 +156,7 @@ export class GamesComponent implements OnInit, AfterViewInit {
           console.error('Error loading genres:', err);
           return of([]);
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
   }
