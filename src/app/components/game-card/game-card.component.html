@@ -5,4 +5,16 @@
   <h3>{{ game().name }}</h3>
   <p>Rating: {{ game().rating }}</p>
   <p>Released : {{ game().released }}</p>
+
+
+  <div class="extra-info">
+    @if((game().suggestions_count?? 0) > 0){
+
+      <button matButton mat-button [routerLink]="['/games' ]"
+        [queryParams]="{gameId: game().id, type: 'suggested', title: game().name }">
+        Games like this {{game().suggestions_count??0}}
+        <mat-icon>arrow_right</mat-icon>
+      </button>
+    }
+  </div>
 </div>
