@@ -32,16 +32,17 @@ export class UserCollectionService {
   async getUserFavoriteGames(uid: string | undefined) {
     const favoriteCollections = await firstValueFrom(this.firebaseFacade.getFavoriteGames(uid));
     console.log(
-      'saving favorite games collection in local storage:',
+      'UserCollectionService.getUserFavoriteGames: favorite games collection in local storage:',
       favoriteCollections.length,
       favoriteCollections.map((g) => g.gameSlug),
     );
-    return favoriteCollections;
+    return favoriteCollections ?? [];
   }
 
   async saveUserFavoriteGamesLocalStorage(uid: string | undefined): Promise<void> {
     const favoriteCollections = await this.getUserFavoriteGames(uid);
     window.localStorage.setItem('favoriteGames', JSON.stringify(favoriteCollections));
+    return;
   }
 
   isUserFavoriteGame(gameId: string): boolean {

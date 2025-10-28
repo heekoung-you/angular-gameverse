@@ -17,6 +17,7 @@ import { HeaderTextComponent } from '../../components/header-text/header-text.co
 import { catchError, finalize, of, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 import { UserCollectionService } from '../../core/services/user.collection.service';
 
 type GameListType = 'ALL' | 'SUGGESTED';
@@ -32,6 +33,7 @@ export class GamesComponent implements OnInit, AfterViewInit {
   private destroyRef = inject(DestroyRef);
   private observer!: IntersectionObserver;
   private activatedRoute = inject(ActivatedRoute);
+  private authService = inject(AuthService);
   private userCollectionService = inject(UserCollectionService);
 
   // page input for normal title/description/promo text
@@ -68,21 +70,24 @@ export class GamesComponent implements OnInit, AfterViewInit {
     return this.loadType() === 'SUGGESTED' ? false : true;
   });
 
-  async ngOnInit() {
+  ngOnInit() {
     // set current uid
-    const uid = await this.userCollectionService.getCurrentUidFromLocalStorage();
+    const uid = this.authService.currentUserSig()?.uid;
     this.currentUid.set(uid);
+    // if (uid) {
+    //   await this.userCollectionService.saveUserFavoriteGamesLocalStorage(uid);
+    // }
 
-    // Load games depends on router query params
-    this.activatedRoute.queryParams.subscribe((params) => {
-      const gameId = params['gameId'];
-      const type = params['type']?.toUpperCase();
+    this.activatedRoute.queryParams // Load games depends on router query params
+      .subscribe((params) => {
+        const gameId = params['gameId'];
+        const type = params['type']?.toUpperCase();
 
-      this.sourceGameId.set(gameId);
-      this.sourceGameTitle.set(params['title']);
-      this.loadType.set(type === 'SUGGESTED' && gameId ? 'SUGGESTED' : 'ALL');
-      this.loadGames(undefined, true);
-    });
+        this.sourceGameId.set(gameId);
+        this.sourceGameTitle.set(params['title']);
+        this.loadType.set(type === 'SUGGESTED' && gameId ? 'SUGGESTED' : 'ALL');
+        this.loadGames(undefined, true);
+      });
 
     this.loadGenres();
   }

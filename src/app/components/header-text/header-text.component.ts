@@ -19,18 +19,13 @@ export class HeaderTextComponent {
 
   hidePromo = signal<boolean>(false);
 
-  constructor() {}
   onHidePromo() {
-    console.log('HeaderComponent-', this.mainHeaderText());
-    console.log('Hiding promo text');
     this.hidePromo.set(true);
   }
 
   redirectPage() {
-    console.log('HeaderComponent-', this.mainHeaderText());
     if (this.redirectLink()) {
       this.router.navigateByUrl(this.redirectLink()!);
     }
-    console.log('Redirecting to promo page');
   }
 }

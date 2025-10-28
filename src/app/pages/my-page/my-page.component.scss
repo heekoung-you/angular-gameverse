@@ -1,0 +1,12 @@
+.game-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; // spacing between cards
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 1rem;
+
+  // Optional: responsive max width
+  max-width: 1200px;
+  margin: 0 auto;
+}

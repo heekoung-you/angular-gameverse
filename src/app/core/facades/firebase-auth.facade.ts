@@ -7,6 +7,7 @@ import {
   updateProfile,
   UserCredential,
   User,
+  user,
 } from '@angular/fire/auth';
 import {
   collection,
@@ -60,8 +61,10 @@ firebase-auth.facade.ts:20 Calling Firebase APIs outside of an Injection context
   }
 
   async getCurrentUserUId(): Promise<string | undefined> {
-    console.log('getCurrentUserUId:', this.auth.currentUser);
-    return this.auth.currentUser?.uid ?? undefined;
+    const user$ = user(this.auth);
+    const currentUser = await firstValueFrom(user$);
+    return currentUser?.uid;
+    //return this.auth.currentUser?.uid ?? undefined;
   }
 
   async updateUserFavoriteGame(
