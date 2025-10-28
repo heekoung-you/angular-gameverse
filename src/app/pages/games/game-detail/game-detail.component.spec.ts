@@ -1,4 +1,4 @@
-import { ComponentFixture, flush, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameDetailComponent } from './game-detail.component';
 import { provideRouter } from '@angular/router';
@@ -13,7 +13,7 @@ import { TagComponent } from '../../../components/tag/tag.component';
 describe('GameDetailComponent', () => {
   let component: GameDetailComponent;
   let fixture: ComponentFixture<GameDetailComponent>;
-  let apiSpy: any;
+  let apiSpy: jasmine.SpyObj<GamesApiService>;
 
   beforeEach(async () => {
     apiSpy = jasmine.createSpyObj('GamesApiService', ['getGameDetail', 'getScreenshots']);

@@ -34,11 +34,6 @@ export class GameDetailComponent implements OnInit {
       console.log('ERROR : Missing game ID');
     }
 
-    // Now using "provideRouter(routes, withComponentInputBinding()), so can get id via @Input"
-    // const paramSub = this.activatedRoute.params.subscribe((params) => {
-    //   this.gameId.set(params['id']);
-    // });
-
     const apiSub = this.gamesApi.getGameDetail(this.gameId).subscribe({
       next: (gameResult: GameSingle) => {
         this.game = gameResult;

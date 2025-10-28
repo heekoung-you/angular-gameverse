@@ -17,8 +17,6 @@ import { HeaderTextComponent } from '../../components/header-text/header-text.co
 import { catchError, finalize, of, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
-import { UserCollectionService } from '../../core/services/user.collection.service';
 
 type GameListType = 'ALL' | 'SUGGESTED';
 
@@ -33,8 +31,6 @@ export class GamesComponent implements OnInit, AfterViewInit {
   private destroyRef = inject(DestroyRef);
   private observer!: IntersectionObserver;
   private activatedRoute = inject(ActivatedRoute);
-  private authService = inject(AuthService);
-  private userCollectionService = inject(UserCollectionService);
 
   // page input for normal title/description/promo text
   title = input<string>();
@@ -43,7 +39,6 @@ export class GamesComponent implements OnInit, AfterViewInit {
   loadType = signal<GameListType>('ALL');
 
   // signals values for page state management
-  currentUid = signal<string | undefined>(undefined);
   pageNumber = signal<number>(1);
   isLoading = signal<boolean>(false);
   hasError = signal<boolean>(false);
@@ -71,13 +66,6 @@ export class GamesComponent implements OnInit, AfterViewInit {
   });
 
   ngOnInit() {
-    // set current uid
-    const uid = this.authService.currentUserSig()?.uid;
-    this.currentUid.set(uid);
-    // if (uid) {
-    //   await this.userCollectionService.saveUserFavoriteGamesLocalStorage(uid);
-    // }
-
     this.activatedRoute.queryParams // Load games depends on router query params
       .subscribe((params) => {
         const gameId = params['gameId'];

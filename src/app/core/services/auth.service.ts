@@ -10,7 +10,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class AuthService {
   authFacade = inject(FirebaseAuthFacade);
-  auth = inject(Auth); // zone-aware
+  auth!: Auth; //auth = inject(Auth); // zone-aware
   // Declare the signal property first
   user!: Signal<User | null>;
 
@@ -20,6 +20,7 @@ export class AuthService {
     // TODO: Need to check this. angular zone does not notice changes for firebase auth objects
     const injector = inject(Injector);
     runInInjectionContext(injector, () => {
+      this.auth = inject(Auth);
       this.user = toSignal(user(this.auth), { initialValue: null });
     });
   }

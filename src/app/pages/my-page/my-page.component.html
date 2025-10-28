@@ -1,6 +1,8 @@
 <p>my-page works!</p>
 <app-header-text [mainHeaderText]="`Welcome ${currentUser()?.displayName}`" />
-<p> current your favorite games are : {{favoriteGames().length }}</p>
+<div class="info-favorite">
+  current your favorite games are : {{favoriteGames().length }}
+</div>
 <div class="game-grid">
   @for (game of favoriteGames(); track game.gameId) {
     <app-game-card [gameId]="game.gameId" (remove)="removeFavorite($event)" />

@@ -8,12 +8,37 @@ import { of } from 'rxjs';
 import { mockGameList, mockGenreListResponse } from '../../testing/mock-games';
 import { GamesApiService } from '../../core/services/games-api.service';
 import { provideRouter } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
+import { UserCollectionService } from '../../core/services/user.collection.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 describe('GamesComponent', () => {
   let component: GamesComponent;
   let fixture: ComponentFixture<GamesComponent>;
-  let apiSpy: any;
+  let apiSpy: jasmine.SpyObj<GamesApiService>;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
+  let userCollectionSpy: jasmine.SpyObj<UserCollectionService>;
+  let snackBarSpy: jasmine.SpyObj<MatSnackBar>;
   beforeEach(async () => {
+    // This is games component test
+    // - imports gameCard. which means i need to set all dependency for game card also create spy object.
+    // - TODO : Check better or practical way of doing this.
+    //    - export all spy object and return value per cases?
+    //    - create another mock game-card component?
     apiSpy = jasmine.createSpyObj('GamesApiService', ['getGames', 'getGenres']);
+    authServiceSpy = jasmine.createSpyObj('AuthService', [], {
+      currentUserSig: () => ({ uid: 'mock-uid' }), // signal-style mock
+    });
+    userCollectionSpy = jasmine.createSpyObj('UserCollectionService', [
+      'toggleFavoriteGame',
+      'isUserFavoriteGame',
+    ]);
+    userCollectionSpy.toggleFavoriteGame.and.resolveTo(true);
+    userCollectionSpy.isUserFavoriteGame.and.returnValue(false);
+
+    snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open']);
+
+    //const mockAuth = {} as Auth;
     await TestBed.configureTestingModule({
       imports: [GamesComponent, GameCardComponent],
       providers: [
@@ -21,6 +46,9 @@ describe('GamesComponent', () => {
         provideHttpClientTesting(),
         provideRouter([]),
         { provide: GamesApiService, useValue: apiSpy },
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: UserCollectionService, useValue: userCollectionSpy },
+        { provide: MatSnackBar, useValue: snackBarSpy },
       ],
     }).compileComponents();
 
