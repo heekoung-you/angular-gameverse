@@ -65,17 +65,17 @@ export class GamesComponent implements OnInit, AfterViewInit {
     return this.loadType() === 'SUGGESTED' ? false : true;
   });
 
-  ngOnInit(): void {
-    // Load games depends on router query params
-    this.activatedRoute.queryParams.subscribe((params) => {
-      const gameId = params['gameId'];
-      const type = params['type']?.toUpperCase();
+  ngOnInit() {
+    this.activatedRoute.queryParams // Load games depends on router query params
+      .subscribe((params) => {
+        const gameId = params['gameId'];
+        const type = params['type']?.toUpperCase();
 
-      this.sourceGameId.set(gameId);
-      this.sourceGameTitle.set(params['title']);
-      this.loadType.set(type === 'SUGGESTED' && gameId ? 'SUGGESTED' : 'ALL');
-      this.loadGames(undefined, true);
-    });
+        this.sourceGameId.set(gameId);
+        this.sourceGameTitle.set(params['title']);
+        this.loadType.set(type === 'SUGGESTED' && gameId ? 'SUGGESTED' : 'ALL');
+        this.loadGames(undefined, true);
+      });
 
     this.loadGenres();
   }
@@ -86,7 +86,7 @@ export class GamesComponent implements OnInit, AfterViewInit {
     this.setupGenreOverflowCheck();
   }
 
-  loadGames(genre: string | undefined, hardReload: boolean = false) {
+  loadGames(genre: string | undefined, hardReload = false) {
     if (hardReload) {
       this.pageNumber.set(1);
     }
@@ -128,14 +128,14 @@ export class GamesComponent implements OnInit, AfterViewInit {
             '\n gamesLoaded:',
             this.games().length,
             '\n error:',
-            err
+            err,
           );
 
           this.hasError.set(true);
           return [of([])];
         }),
         finalize(() => this.isLoading.set(false)),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
   }
@@ -149,7 +149,7 @@ export class GamesComponent implements OnInit, AfterViewInit {
           console.error('Error loading genres:', err);
           return of([]);
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
   }

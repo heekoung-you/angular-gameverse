@@ -1,4 +1,3 @@
-import { User } from '@angular/fire/auth';
 import { createAction, props } from '@ngrx/store';
 import { AuthUserDto } from '../models/user.model';
 

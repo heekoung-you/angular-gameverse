@@ -1,20 +1,39 @@
-<div class="game-card">
-  <a [routerLink]="['/games', game().id]">
-    <img [src]="game().background_image" alt="{{ game().name }}" />
-  </a>
-  <h3>{{ game().name }}</h3>
-  <p>Rating: {{ game().rating }}</p>
-  <p>Released : {{ game().released }}</p>
+@defer (when readyToRender()){
 
+  <div class="game-card">
+    <a [routerLink]="['/games', resolvedGame()?.id]">
+      <img [src]="resolvedGame()?.background_image" alt="{{ resolvedGame()?.name }}" />
+    </a>
+    <h3 class="game-title">{{ resolvedGame()?.name }}
+      @if(uid() && resolvedGame()?.id) {
+        <mat-icon class="favorite" (click)="toggleFavorite(resolvedGame()!)"
+          [ngClass]="{ active: isInFavorites(resolvedGame()?.id?.toString() ?? '') }">
+          favorite
+        </mat-icon>
+      }
 
-  <div class="extra-info">
-    @if((game().suggestions_count?? 0) > 0){
+    </h3>
 
-      <button matButton mat-button [routerLink]="['/games' ]"
-        [queryParams]="{gameId: game().id, type: 'suggested', title: game().name }">
-        Games like this {{game().suggestions_count??0}}
-        <mat-icon>arrow_right</mat-icon>
-      </button>
-    }
+    <p>Rating: {{ resolvedGame()?.rating }}</p>
+    <p>Released : {{ resolvedGame()?.released }}</p>
+
+    <div class="extra-info">
+      @if((resolvedGame()?.suggestions_count?? 0) > 0){
+        <button matButton mat-button [routerLink]="['/games' ]"
+          [queryParams]="{gameId: resolvedGame()?.id, type: 'suggested', title: resolvedGame()?.name }">
+          Games like this {{resolvedGame()?.suggestions_count??0}}
+          <mat-icon>arrow_right</mat-icon>
+        </button>
+      }
+    </div>
   </div>
-</div>
+}
+@placeholder {
+  <div class="game-card skeleton">
+    <div class="image-placeholder"></div>
+    <div class="title-placeholder"></div>
+    <div class="text-placeholder short"></div>
+    <div class="text-placeholder long"></div>
+    <div class="button-placeholder"></div>
+  </div>
+}

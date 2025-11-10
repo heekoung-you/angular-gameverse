@@ -5,7 +5,7 @@ export const selectAuthState = (state: { auth: AuthState }) => state.auth;
 
 export const selectIsAuthResolved = createSelector(
   selectAuthState,
-  (state) => state.isAuthResolved
+  (state) => state.isAuthResolved,
 );
 
 export const selectAuthStatus = createSelector(selectAuthState, (state) => ({
@@ -17,5 +17,5 @@ export const selectUser = createSelector(selectAuthState, (state) => state.user)
 
 export const selectIsAuthenticated = createSelector(
   selectAuthState,
-  (state) => state.isAuthenticated
+  (state) => state.isAuthenticated,
 );

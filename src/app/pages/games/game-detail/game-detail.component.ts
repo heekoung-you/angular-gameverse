@@ -1,22 +1,12 @@
-import {
-  Component,
-  computed,
-  DestroyRef,
-  Inject,
-  inject,
-  Input,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, computed, DestroyRef, inject, Input, OnInit, signal } from '@angular/core';
 import { GamesApiService } from '../../../core/services/games-api.service';
 import { GamePlatformsInner, GameSingle, ScreenShot } from '../../../api-client';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RatingsComponent } from '../../../components/ratings/ratings.component';
 import { Rating } from '../../../models/ratings.model';
-import { CommonModule, DatePipe, NgIf } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MediaGalleryComponent } from '../../../components/media-gallery/media-gallery.component';
 import { TagComponent } from '../../../components/tag/tag.component';
-import { deleteAllPersistentCacheIndexes } from '@angular/fire/firestore';
 import { ErrorState } from '../../../models/error.model';
 
 @Component({
@@ -29,9 +19,8 @@ export class GameDetailComponent implements OnInit {
   destroyRef = inject(DestroyRef);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
-
-  constructor(private gamesApi: GamesApiService) {}
-
+  gamesApi = inject(GamesApiService);
+  test = 'some test value';
   game!: GameSingle;
   //gameId = signal('');
   @Input({ required: true }) gameId!: string;
@@ -44,11 +33,6 @@ export class GameDetailComponent implements OnInit {
     if (!this.gameId) {
       console.log('ERROR : Missing game ID');
     }
-
-    // Now using "provideRouter(routes, withComponentInputBinding()), so can get id via @Input"
-    // const paramSub = this.activatedRoute.params.subscribe((params) => {
-    //   this.gameId.set(params['id']);
-    // });
 
     const apiSub = this.gamesApi.getGameDetail(this.gameId).subscribe({
       next: (gameResult: GameSingle) => {

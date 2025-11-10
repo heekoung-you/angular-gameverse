@@ -4,10 +4,13 @@ import { Store } from '@ngrx/store';
 import { selectIsAuthenticated, selectUser } from '../../store/auth.selector';
 import { AsyncPipe } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, AsyncPipe],
+  imports: [RouterLink, AsyncPipe, MatToolbarModule, MatButtonModule, MatIconModule, MatMenuModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

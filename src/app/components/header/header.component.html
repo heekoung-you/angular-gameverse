@@ -13,12 +13,22 @@
       <div class="userMenu">
         <!--TODO : Create menu come with click - profile / logout etc -->
         @if(isAuthenticated$ | async; as isAuth ) {
-        <span class="header-nva-user">
-          {{ (user$ | async)?.displayName || (user$ | async)?.email }}
-        </span>
-        <a class="header-nav-link" (click)="logout()">todo-logout</a>
+          <button matButton [matMenuTriggerFor]="menu">Welcome,
+            {{ (user$ | async)?.displayName || (user$ | async)?.email}}</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="'/my-page'">
+              <mat-icon>account_box</mat-icon>
+              <span>Collections</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>logout</mat-icon>
+              <span>Log Out</span></button>
+          </mat-menu>
+
+
+
         }@else {
-        <a class="header-nav-link" routerLink="/login">Login</a>
+          <a class="header-nav-link" routerLink="/login">Login</a>
         }
       </div>
     </nav>

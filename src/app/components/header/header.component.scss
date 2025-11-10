@@ -31,3 +31,22 @@
   color: azure;
 }
 
+.user-toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+
+  .user-name {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  button[mat-button] {
+
+    font-weight: 500;
+  }
+}

@@ -1,3 +1,4 @@
+import { User } from '@angular/fire/auth';
 import { Gender } from './user-gender';
 
 export interface registerUser {
@@ -22,5 +23,15 @@ export interface AuthUserDto {
   email: string | null;
   displayName: string | null;
   photoURL: string | null;
-  providerId: string;
+  providerId: string | null;
+}
+
+export interface FirebaseUserWithToken extends User {
+  uid: string;
+  email: string | null;
+  stsTokenManager: {
+    accessToken: string;
+    refreshToken: string;
+    expirationTime: string;
+  };
 }

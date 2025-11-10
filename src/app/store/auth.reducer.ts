@@ -1,7 +1,6 @@
 //import { User } from '@angular/fire/auth';
 import { createReducer, on } from '@ngrx/store';
 import { loginSuccess, logout } from './auth.actions';
-import { User } from '@angular/fire/auth';
 import { AuthUserDto } from '../models/user.model';
 /* It listens for dispatched actions (like loginSuccess or logout) and updates the global store accordingly. */
 export interface AuthState {
@@ -37,5 +36,5 @@ export const authReducer = createReducer(
     };
     console.log('Dispatching logout: oldState-', state, ', newState:', newState);
     return newState;
-  })
+  }),
 );

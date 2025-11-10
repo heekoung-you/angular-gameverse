@@ -1,15 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
-import { UserCredential, User } from '@angular/fire/auth';
+import { UserCredential, User, Auth } from '@angular/fire/auth';
 import { FirebaseAuthFacade } from '../facades/firebase-auth.facade';
-import { registerUser } from '../../models/user.model';
+import { FirebaseUserWithToken, registerUser } from '../../models/user.model';
 import { Gender } from '../../models/user-gender';
 
 describe('AuthService', () => {
   let service: AuthService;
-  let mockFacade: any;
+  let mockFacade: jasmine.SpyObj<FirebaseAuthFacade>;
 
   beforeEach(() => {
+    const mockAuth = {} as Auth; // or a more complete mock if needed
+
     mockFacade = jasmine.createSpyObj('FirebaseAuthFacade', [
       'signIn',
       'createUser',
@@ -18,10 +20,16 @@ describe('AuthService', () => {
     ]);
 
     TestBed.configureTestingModule({
-      providers: [AuthService, { provide: FirebaseAuthFacade, useValue: mockFacade }],
+      providers: [
+        AuthService,
+        { provide: FirebaseAuthFacade, useValue: mockFacade },
+        { provide: Auth, useValue: mockAuth },
+      ],
     });
 
-    service = TestBed.inject(AuthService);
+    TestBed.runInInjectionContext(() => {
+      service = TestBed.inject(AuthService);
+    });
   });
 
   it('should be created', () => {
@@ -51,7 +59,7 @@ describe('AuthService', () => {
         refreshToken: 'mockRefreshToken',
         expirationTime: '9999999999999',
       },
-    } as any;
+    } as FirebaseUserWithToken;
 
     const mockUserCredential: UserCredential = { user: mockUser } as UserCredential;
 
