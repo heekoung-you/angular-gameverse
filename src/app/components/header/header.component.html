@@ -12,7 +12,7 @@
       <a class="header-nav-link" routerLink="/games">Games</a>
       <div class="userMenu">
         <!--TODO : Create menu come with click - profile / logout etc -->
-        @if(isAuthenticated$ | async; as isAuth ) {
+        @if((isAuthenticated$ | async) !== null && (user$ | async) !== null) {
           <button matButton [matMenuTriggerFor]="menu">Welcome,
             {{ (user$ | async)?.displayName || (user$ | async)?.email}}</button>
           <mat-menu #menu="matMenu">

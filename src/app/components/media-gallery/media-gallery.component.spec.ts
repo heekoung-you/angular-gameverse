@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MediaGalleryComponent } from './media-gallery.component';
 import { mockSingleGameCase, mockScrrenShots } from '../../testing/mock-games';
 
