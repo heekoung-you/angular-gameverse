@@ -36,5 +36,13 @@ export const routes: Routes = [
     path: 'my-page',
     component: MyPageComponent,
   },
+  {
+    path: 'color-picker',
+    loadComponent() {
+      return import('./pages/color-picker/color-picker.component').then(
+        (m) => m.ColorPickerComponent,
+      );
+    },
+  },
   { path: '**', component: NotFoundComponent },
 ];

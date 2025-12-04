@@ -10,6 +10,7 @@
     </div>
     <nav class="header-nav-container">
       <a class="header-nav-link" routerLink="/games">Games</a>
+      <a class="header-nav-link" routerLink="/color-picker">ColorPicker</a>
       <div class="userMenu">
         <!--TODO : Create menu come with click - profile / logout etc -->
         @if((isAuthenticated$ | async) !== null && (user$ | async) !== null) {
