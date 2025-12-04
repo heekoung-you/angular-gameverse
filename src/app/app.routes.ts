@@ -44,5 +44,13 @@ export const routes: Routes = [
       );
     },
   },
+  {
+    path: 'images',
+    loadComponent() {
+      return import('./pages/image-playground/image-playground.component').then(
+        (m) => m.ImagePlaygroundComponent,
+      );
+    },
+  },
   { path: '**', component: NotFoundComponent },
 ];

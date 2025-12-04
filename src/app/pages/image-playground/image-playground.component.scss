@@ -1,0 +1,9 @@
+.original {
+  max-width: 400px;            /* limit how wide it can grow */
+  width: 100%;                 /* responsive up to max */
+  height: 100%;                /* let height adjust */
+
+  background-size: contain;    /* scale image to fit inside */
+  background-repeat: no-repeat;
+  background-position: center; /* keep it centered */
+}
