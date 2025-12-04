@@ -72,6 +72,9 @@ export class AuthService {
   logout(): Promise<void> {
     window.localStorage.removeItem('accessToken');
     window.localStorage.removeItem('favoriteGames');
+    window.localStorage.removeItem('refreshToken');
+    window.localStorage.removeItem('expirationTime');
+    window.localStorage.removeItem('uid');
     return this.authFacade.signOut();
   }
 }

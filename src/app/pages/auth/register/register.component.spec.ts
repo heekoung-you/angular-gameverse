@@ -1,18 +1,16 @@
-import { ComponentFixture, flush, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterComponent } from './register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderTextComponent } from '../../../components/header-text/header-text.component';
 import { AuthService } from '../../../core/services/auth.service';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { initialState } from '../../../store/auth.reducer';
-import { Store } from '@ngrx/store';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
-  let authServiceSpy: any;
-  let storeSpy: MockStore;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
 
   beforeEach(async () => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['register']);
@@ -26,7 +24,6 @@ describe('RegisterComponent', () => {
 
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
-    storeSpy = TestBed.inject(Store) as MockStore;
     fixture.detectChanges();
   });
 
@@ -49,9 +46,9 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
 
     const errorMsg = fixture.nativeElement.querySelector('.control-error');
-    // console.log('passwordsGroup:', passwordsGroup.invalid, passwordsGroup);
+
     expect(passwordsGroup.invalid).toBeTrue();
-    // console.log('errorMsg:', errorMsg);
+
     expect(errorMsg).toBeTruthy();
     expect(errorMsg.textContent).toContain('please enter a valid password');
   });
