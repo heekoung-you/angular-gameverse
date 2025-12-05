@@ -1,0 +1,12 @@
+.items-grid {
+  display: grid;
+  /* Always at least 3 columns, then auto-fit more if space allows */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  padding: 16px;
+
+  /* Ensure minimum of 3 columns */
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

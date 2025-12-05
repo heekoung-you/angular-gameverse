@@ -52,5 +52,13 @@ export const routes: Routes = [
       );
     },
   },
+  {
+    path: 'inventory',
+    loadComponent() {
+      return import('./pages/inventory-items/inventory-items.component').then(
+        (m) => m.InventoryItemsComponent,
+      );
+    },
+  },
   { path: '**', component: NotFoundComponent },
 ];
