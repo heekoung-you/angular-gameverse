@@ -36,5 +36,29 @@ export const routes: Routes = [
     path: 'my-page',
     component: MyPageComponent,
   },
+  {
+    path: 'color-picker',
+    loadComponent() {
+      return import('./pages/color-picker/color-picker.component').then(
+        (m) => m.ColorPickerComponent,
+      );
+    },
+  },
+  {
+    path: 'images',
+    loadComponent() {
+      return import('./pages/image-playground/image-playground.component').then(
+        (m) => m.ImagePlaygroundComponent,
+      );
+    },
+  },
+  {
+    path: 'inventory',
+    loadComponent() {
+      return import('./pages/inventory-items/inventory-items.component').then(
+        (m) => m.InventoryItemsComponent,
+      );
+    },
+  },
   { path: '**', component: NotFoundComponent },
 ];

@@ -1,0 +1,14 @@
+@if (totals$ | async; as totals) {
+  <p>Total Weight: {{ totals.weight }} | Total Value: {{ totals.value }} | Total Inventories: {{ totals.count }}</p>
+}
+
+@if (items$ | async; as items) {
+  <ul>
+    @for (item of items; track $index) {
+      <li>
+        {{ item.item.id }} ({{ item.item.name }}) - Qty: {{ item.count}}
+    <button (click)="remove(item.item.id)">Remove</button>
+      </li>
+      }
+  </ul>
+  }

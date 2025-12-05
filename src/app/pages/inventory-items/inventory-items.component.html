@@ -1,0 +1,15 @@
+<h2>Available Items</h2>
+
+<div class="items-grid">
+  @for (item of availableItems; track $index) {
+    <app-item-card [item]="item" (add)="addToInventory(item)"></app-item-card>
+  }
+
+
+</div>
+
+<hr />
+
+<h2>Your Inventory</h2>
+<hr />
+<app-inventory-list></app-inventory-list>

@@ -1,0 +1,8 @@
+@if (item(); as itm){
+  <div class="card">
+    <h4>{{ itm.name }}</h4>
+    <p>Type: {{ itm.type }}</p>
+    <p>Weight: {{ itm.weight }} | Value: {{ itm.value }}</p>
+    <button (click)="addItem(itm)">Add to Inventory</button>
+  </div>
+}

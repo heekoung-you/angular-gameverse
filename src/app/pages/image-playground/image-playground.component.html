@@ -1,0 +1,13 @@
+<p>image-playground works!</p>
+
+<div>
+  <input type="file" (change)="onFileSelected($event)" />
+</div>
+<canvas #imageCanvas (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp()"
+  style="border: 1px solid black;"></canvas>
+<div>
+  <button (click)="cropImage()">Crop</button>
+  <button (click)="downloadCroppedImage()">Download Cropped Image</button>
+</div>
+<canvas #croppedCanvas style="border: 1px solid black;"></canvas>
+<div class="original" [style.background-image]="originalImageUrl"></div>

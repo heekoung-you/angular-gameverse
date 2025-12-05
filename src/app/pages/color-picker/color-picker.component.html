@@ -1,0 +1,10 @@
+<p>color-picker works!</p>
+<app-color-selector (colorSelected)="onColorSelected($event)" [defaultColor]="defaultColor"></app-color-selector>
+<button (click)="resetColor()">Reset Color</button>
+<button (click)="addPreview()">Add Color</button>
+
+<div class="preview-container">
+  @for( preview of pickedColors; track $index ) {
+    <app-preview-box [color]="preview" (click)="removePreview($index)"></app-preview-box>
+  }
+</div>
