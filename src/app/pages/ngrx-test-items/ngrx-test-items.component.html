@@ -1,0 +1,36 @@
+<h2>NgRx Test Items</h2>
+
+
+@if ((loaded$ | async)===false) {
+  <p>Loading...</p>
+}
+
+
+
+<h3>Available Items </h3>
+<button (click)="reload()">Load Items</button>
+<div class="catalog-grid">
+  @for (itm of items$ | async; track itm.id) {
+
+    <app-item-card [item]="itm" (add)="addToInventory($event)"></app-item-card>
+    <!-- <app-item-card [item]="itm" (add)="addToInventory($event)"></app-item-card> -->
+
+  }
+</div>
+
+<h3>Inventory</h3>
+@if (totals$ | async; as totals) {
+  <p>Total Weight: {{ totals.weight }}</p>
+  <p>Total Value: {{ totals.value }}</p>
+  <p>Total Count: {{ totals.count }}</p>
+}
+<ul>
+  @for (entry of inventory$ | async; track entry.item.id) {
+    @if(entry.count>0){
+      <li>
+        {{ entry.item.name }} × {{ entry.count }}
+        <button (click)="removeFromInventory(entry.item.id)">Remove</button>
+      </li>
+    }
+  }
+</ul>

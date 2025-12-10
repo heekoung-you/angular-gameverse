@@ -60,5 +60,13 @@ export const routes: Routes = [
       );
     },
   },
+  {
+    path: 'ngrx',
+    loadComponent() {
+      return import('./pages/ngrx-test-items/ngrx-test-items.component').then(
+        (m) => m.NgrxTestItemsComponent,
+      );
+    },
+  },
   { path: '**', component: NotFoundComponent },
 ];
