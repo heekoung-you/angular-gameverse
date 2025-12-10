@@ -30,6 +30,10 @@ module.exports = tseslint.config(
           style: "kebab-case",
         },
       ],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { "varsIgnorePattern": "^_$", "argsIgnorePattern": "^_$" }
+      ]
     },
     ignores: ["src/app/api-client/**"],
   },

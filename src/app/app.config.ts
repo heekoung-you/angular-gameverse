@@ -16,6 +16,9 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideStore } from '@ngrx/store';
 import { authReducer } from './store/auth.reducer';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { itemReducer } from './features/ngrx-test/store/item.reducer';
+import { ItemEffects } from './features/ngrx-test/store/item.effects';
+import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,7 +32,11 @@ export const appConfig: ApplicationConfig = {
     /* login state using ngRX saving it into store */
     provideStore({
       auth: authReducer,
+      ngrxTestItems: itemReducer,
     }),
+    // Use provideState to register it as a feature
+    //provideState('ngrxTestItems', itemReducer),
+    provideEffects([ItemEffects]),
     /* Google Firebase setting  from heeky.du@gmail.com */
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
