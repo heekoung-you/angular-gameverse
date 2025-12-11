@@ -1,0 +1,72 @@
+<!-- Transactions Page Mock Layout -->
+
+<div class="transactions-page">
+
+  <!-- Filter Bar -->
+  <section class="filter-bar">
+    <h2>Filter Transactions</h2>
+    <div class="filters">
+      <label>
+        Type:
+        <select>
+          <option value="all">All</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+      </label>
+
+      <label>
+        Category:
+        <input type="text" placeholder="Enter category..." />
+      </label>
+
+      <button>Apply Filters</button>
+    </div>
+  </section>
+
+  <!-- Totals / Summary Card -->
+  <section class="totals-card">
+    <h2>Summary</h2>
+    <div class="totals">
+      <p><strong>Total Income:</strong> €0.00</p>
+      <p><strong>Total Expense:</strong> €0.00</p>
+      <p><strong>Net Balance:</strong> €0.00</p>
+    </div>
+  </section>
+
+  <!-- Transactions List -->
+  <section class="transaction-list">
+    <h2>Transactions</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Payment Method</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example rows -->
+        <tr>
+          <td>2025-12-01</td>
+          <td>Coffee</td>
+          <td>Food</td>
+          <td>Expense</td>
+          <td>€2.50</td>
+          <td>Card</td>
+        <tr>
+          <td>2025-12-02</td>
+          <td>Salary</td>
+          <td>Income</td>
+          <td>Income</td>
+          <td>€3000.00</td>
+          <td>Bank Transfer</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>

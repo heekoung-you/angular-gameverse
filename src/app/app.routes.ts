@@ -6,44 +6,52 @@ import { RegisterComponent } from './pages/auth/register/register.component';
 import { authGuard } from './core/guards/auth.guard';
 import { GameDetailComponent } from './pages/games/game-detail/game-detail.component';
 import { MyPageComponent } from './pages/my-page/my-page.component';
+import { GamesLayoutComponent } from './pages/games/games-layout.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'games', pathMatch: 'full' },
   {
-    path: 'games',
-    component: GamesComponent,
-    data: {
-      title: 'Game List',
-      description: 'A list of awesome games',
-      promoText: 'Discover your next favorite game!',
-    },
+    path: '',
+    component: GamesLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'games', pathMatch: 'full' },
+      {
+        path: 'games',
+        component: GamesComponent,
+        data: {
+          title: 'Game List',
+          description: 'A list of awesome games',
+          promoText: 'Discover your next favorite game!',
+        },
+      },
+      {
+        path: 'games/:gameId',
+        component: GameDetailComponent,
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'my-page',
+        component: MyPageComponent,
+      },
+      {
+        path: 'color-picker',
+        loadComponent() {
+          return import('./pages/color-picker/color-picker.component').then(
+            (m) => m.ColorPickerComponent,
+          );
+        },
+      },
+    ],
   },
-  {
-    path: 'games/:gameId',
-    component: GameDetailComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [authGuard],
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-    canActivate: [authGuard],
-  },
-  {
-    path: 'my-page',
-    component: MyPageComponent,
-  },
-  {
-    path: 'color-picker',
-    loadComponent() {
-      return import('./pages/color-picker/color-picker.component').then(
-        (m) => m.ColorPickerComponent,
-      );
-    },
-  },
+
   {
     path: 'images',
     loadComponent() {
@@ -67,6 +75,10 @@ export const routes: Routes = [
         (m) => m.NgrxTestItemsComponent,
       );
     },
+  },
+  {
+    path: 'finance',
+    loadChildren: () => import('./pages/finance/finance-routing').then((m) => m.FINANCE_ROUTES),
   },
   { path: '**', component: NotFoundComponent },
 ];
