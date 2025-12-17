@@ -1,4 +1,4 @@
-
+@use "tailwindcss";
 // Include theming for Angular Material with `mat.theme()`.
 // This Sass mixin will define CSS variables that are used for styling Angular Material
 // components according to the Material 3 design spec.
@@ -42,6 +42,7 @@ body {
   --accent-color: #8941e2;
   --accent-hover: #6923be;
   --accent-active: #9c6de0;
+  --table-row-hover:#9c6de0;
 }
 
 body {
@@ -86,10 +87,9 @@ a:visited {
 .app-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: 2rem;
+  gap: 0.5rem;
   max-width: 100vw;
-  margin: 0 auto;
+  margin: 0.5rem 0.5rem;
 }
 
 /* Header styling */
@@ -111,13 +111,10 @@ footer {
   flex: 1;
 }
 
-
-
 .global-main-content {
   flex: 1;
   padding: 1rem;
 }
-
 
 input[type="text"],
 input[type="email"],
@@ -125,7 +122,9 @@ input[type="password"],
 select {
   border:1px solid #ccc;
   border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--card-bg); // dark background
+  color: var(--text-color);         // light text
 }
 
 
@@ -139,9 +138,9 @@ input:focus {
 
 button,
 .btn {
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1rem;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 500;
   color: #fff;
   background-color: #007bff;
   border: none;

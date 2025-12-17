@@ -1,0 +1,41 @@
+.transaction-list-table{
+  width: 100%;
+  border-collapse: collapse;
+
+
+  th, td {
+    padding: 0.5rem;
+    border-bottom: 1px solid white;
+  }
+
+  th {
+    text-align: left;
+    font-weight: 600;
+  }
+  // th:nth-child(1), td:nth-child(1) { width: 15%; }  /* Date */
+  // th:nth-child(2), td:nth-child(2) { width: 25%; }  /* Description */
+  // th:nth-child(3), td:nth-child(3) { width: 15%; }  /* Category */
+  // th:nth-child(4), td:nth-child(4) { width: 10%; }  /* Type */
+  // th:nth-child(5), td:nth-child(5) { width: 20%; }  /* Amount */
+  // th:nth-child(6), td:nth-child(6) { width: 15%; }  /* Payment Method */
+
+  &__header-cell{
+    align-items: center;
+    &:not(.transaction-list-table__header-cell--not-sortable) {
+      cursor: pointer;
+      &:hover  {
+      color: var(--accent-hover);
+      }
+    }
+  }
+
+  &__header-icon{
+    vertical-align: bottom;
+    font-size: 1.2rem;
+    margin-left: 0.25rem;
+  }
+
+  &__row:hover {
+    background-color: var(--table-row-hover);
+  }
+}

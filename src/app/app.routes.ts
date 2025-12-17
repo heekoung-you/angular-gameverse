@@ -49,33 +49,33 @@ export const routes: Routes = [
           );
         },
       },
+      {
+        path: 'images',
+        loadComponent() {
+          return import('./pages/image-playground/image-playground.component').then(
+            (m) => m.ImagePlaygroundComponent,
+          );
+        },
+      },
+      {
+        path: 'inventory',
+        loadComponent() {
+          return import('./pages/inventory-items/inventory-items.component').then(
+            (m) => m.InventoryItemsComponent,
+          );
+        },
+      },
+      {
+        path: 'ngrx',
+        loadComponent() {
+          return import('./pages/ngrx-test-items/ngrx-test-items.component').then(
+            (m) => m.NgrxTestItemsComponent,
+          );
+        },
+      },
     ],
   },
 
-  {
-    path: 'images',
-    loadComponent() {
-      return import('./pages/image-playground/image-playground.component').then(
-        (m) => m.ImagePlaygroundComponent,
-      );
-    },
-  },
-  {
-    path: 'inventory',
-    loadComponent() {
-      return import('./pages/inventory-items/inventory-items.component').then(
-        (m) => m.InventoryItemsComponent,
-      );
-    },
-  },
-  {
-    path: 'ngrx',
-    loadComponent() {
-      return import('./pages/ngrx-test-items/ngrx-test-items.component').then(
-        (m) => m.NgrxTestItemsComponent,
-      );
-    },
-  },
   {
     path: 'finance',
     loadChildren: () => import('./pages/finance/finance-routing').then((m) => m.FINANCE_ROUTES),

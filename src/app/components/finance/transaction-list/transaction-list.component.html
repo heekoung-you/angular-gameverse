@@ -1,1 +1,63 @@
-<p>transaction-list works!</p>
+<table class="transaction-list-table">
+  <thead>
+    <tr class="transaction-list-table__header-row">
+      <th (click)="sortBy('date')" class="transaction-list-table__header-cell">
+        Date
+        <mat-icon class="transaction-list-table__header-icon">
+          {{ getSortIcon('date') }}
+        </mat-icon>
+      </th>
+      <th (click)="sortBy('desc')" class="transaction-list-table__header-cell">
+        Description
+        <mat-icon class="transaction-list-table__header-icon">
+          {{ getSortIcon('desc') }}
+        </mat-icon>
+      </th>
+      <th (click)="sortBy('category')" class="transaction-list-table__header-cell">Category
+        <mat-icon class="transaction-list-table__header-icon">
+          {{ getSortIcon('category') }}
+        </mat-icon>
+      </th>
+      <th (click)="sortBy('type')" class="transaction-list-table__header-cell">Type
+        <mat-icon class="transaction-list-table__header-icon">
+          {{ getSortIcon('type') }}
+        </mat-icon>
+      </th>
+      <th (click)="sortBy('amount')" class="transaction-list-table__header-cell">
+        Amount
+        <mat-icon class="transaction-list-table__header-icon">
+          {{ getSortIcon('amount') }}
+        </mat-icon>
+      </th>
+      <th class="transaction-list-table__header-cell transaction-list-table__header-cell--not-sortable">
+        Payment Method
+      </th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (transaction of sortedTransactions; track transaction.id) {
+      <tr class="transaction-list-table__row">
+        <td class="transaction-list-table__date">
+          {{ formattedDate(transaction) }}
+        </td>
+        <td class="transaction-list-table__desc">
+          {{ transaction.desc }}
+        </td>
+        <td class="transaction-list-table__category">
+          {{ transaction.category }}
+        </td>
+        <td class="transaction-list-table__type">
+          {{ transaction.type }}
+        </td>
+        <td class="transaction-list-table__amount">
+          €{{ transaction.amount.toFixed(2) }}
+        </td>
+        <td class="transaction-list-table__payment">
+          {{ transaction.payment.method }}
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

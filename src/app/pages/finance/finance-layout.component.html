@@ -1,6 +1,17 @@
-<div class="finance-container">
-  <div class="layout">
-    <div class="main-content">
+<div class="finance-app">
+  <div class="finance-app__layout">
+    <nav class="finance-app__nav">
+      <a class="finance-app__nav-link" [routerLink]="'/finance/dashboard'"
+        routerLinkActive="finance-app__nav-link--active" [routerLinkActiveOptions]="{ exact: true }">
+        Finance
+      </a>
+
+      <a class="finance-app__nav-link" [routerLink]="'/finance/transactions'"
+        routerLinkActive="finance-app__nav-link--active">
+        Transactions
+      </a>
+    </nav>
+    <div class="finance-app__main">
       <router-outlet></router-outlet>
     </div>
   </div>

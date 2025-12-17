@@ -1,0 +1,33 @@
+.finance-app{
+
+  &__layout{
+
+    display: grid;
+    grid-template-rows: 1fr, auto;
+
+  }
+
+  &__nav{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      gap: 1rem;
+      padding: 0.5rem;
+      &__active{
+        font-weight: bold;
+        border-bottom: 2px solid var(--accent-color);
+    }
+  }
+
+  &__nav-link {
+    font-weight: 1.2rem;
+    &--active {
+      font-weight: bold;
+      border-bottom: 2px solid var(--accent-color);
+    }
+
+    &:hover {
+      color: var(--accent-hover);
+    }
+  }
+}

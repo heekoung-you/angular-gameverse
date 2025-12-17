@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-filter-bar',
   imports: [],
   templateUrl: './filter-bar.component.html',
-  styleUrl: './filter-bar.component.scss'
+  styleUrl: './filter-bar.component.scss',
 })
-export class FilterBarComponent {
-
-}
+export class FilterBarComponent {}
