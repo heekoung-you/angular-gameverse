@@ -17,6 +17,14 @@
       "summary filter"
       "results results" ;
 
+  // Mobile view - stack all elements vertically
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "summary"
+        "filter"
+        "results";
+    }
 
     // Top row spans both columns
     .top-row {
