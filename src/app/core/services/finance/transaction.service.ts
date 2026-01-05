@@ -35,6 +35,20 @@ export class TransactionService {
     );
   }
 
+  searchByParam(params: { key: string; value: string }[]): Observable<Transaction[]> {
+    return this.transactions$.pipe(
+      map((transactions) =>
+        transactions.filter((transaction) =>
+          params.every(
+            (p) =>
+              String(transaction[p.key as keyof Transaction]).toLocaleLowerCase() ===
+              p.value.toLocaleLowerCase(),
+          ),
+        ),
+      ),
+    );
+  }
+
   sortByDate(order: 'asc' | 'desc'): Transaction[] {
     const transactionsCopy = [...this.transactions];
     return transactionsCopy.sort((a, b) => {

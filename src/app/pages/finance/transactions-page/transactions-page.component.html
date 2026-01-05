@@ -11,7 +11,7 @@
 
     </section>
     <section class="filter-bar">
-      <app-filter-bar></app-filter-bar>
+      <app-filter-bar (filterChanged)="onFilterChanged($event)"></app-filter-bar>
     </section>
 
     <section class="results">

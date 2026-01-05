@@ -2,15 +2,19 @@
 
   &__layout{
 
-    display: grid;
-    grid-template-rows: 1fr, auto;
+    //display: grid;
+    //grid-template-rows: 1fr, auto;
 
   }
 
   &__nav{
+      position: sticky;
+      top:3rem;
       display: flex;
+      background-color: var(--bg-color);
       flex-direction: row;
       justify-content: space-around;
+      z-index: 1000;
       gap: 1rem;
       padding: 0.5rem;
       &__active{
@@ -29,5 +33,9 @@
     &:hover {
       color: var(--accent-hover);
     }
+  }
+
+  &__main{
+    position: relative;
   }
 }

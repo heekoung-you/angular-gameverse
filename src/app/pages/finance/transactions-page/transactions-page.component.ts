@@ -38,8 +38,21 @@ export class TransactionsPageComponent implements OnInit {
         }),
       )
       .subscribe();
+  }
 
-    //this.transactions.set(this.transactionService.getAll());
-    //this.transactionSummary.set(this.transactionService.getSummary());
+  onFilterChanged(filter: { key: string; value: string }[]): void {
+    console.log('onFilerChanged: ', filter);
+    this.transactionService
+      .searchByParam(filter)
+      .pipe(
+        tap((transactions) => this.transactions.set(transactions)),
+        catchError((err: Error) => {
+          console.error('Failed to search transactions', err);
+          return of([]);
+        }),
+      )
+      .subscribe({
+        next: (data) => console.log('onFilterChanged-Result - ', data),
+      });
   }
 }
