@@ -1,15 +1,20 @@
 .games-app-container {
   display: flex;
-  min-height: 100vh;        /* full viewport height */
+  min-height: 100vh; /* full viewport height */
 }
 
 .games-app-container app-sidebar {
-  flex: 0 0 20%;          /* fixed width sidebar */
-
+  flex: 0 0 10%; /* fixed width sidebar */
 }
 
 .games-app-container .main-content {
-  flex: 1;                  /* take remaining space */
+  flex: 1; /* take remaining space */
   padding: 16px;
-  overflow: auto;           /* scroll content if needed */
+  overflow: auto; /* scroll content if needed */
+}
+
+@media (max-width: 760px) {
+  app-sidebar {
+    display: none;
+  }
 }

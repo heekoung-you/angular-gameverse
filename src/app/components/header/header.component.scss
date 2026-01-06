@@ -1,35 +1,99 @@
+/* ===========================
+   HEADER LAYOUT
+   =========================== */
+
+.header {
+  width: 100%;
+  background-color: #1e1e1e; // optional, adjust to your theme
+}
+
 .header-wrapper {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px
+  justify-content: space-between;
+  padding: 10px 16px;
 }
+
+/* ===========================
+   LOGO
+   =========================== */
 
 .header-logo {
-  font-size: 1.2em;
+  font-size: 1.2rem;
   font-weight: bold;
   text-transform: uppercase;
+
+  a {
+    color: azure;
+    text-decoration: none;
+    font-weight: inherit;
+  }
 }
 
-.header-logo a {
-  color: azure;
-  font-weight: bold;
-  text-decoration: none;
-}
+/* ===========================
+   NAVIGATION (DESKTOP)
+   =========================== */
 
 .header-nav-container {
   display: flex;
-  gap: 20px;
   align-items: center;
-  text-transform: uppercase;
-  color: azure;
+  gap: 20px;
+
+  .header-nav-link {
+    color: azure;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 }
 
-.header-nav-container a {
+/* ===========================
+   USER MENU (DESKTOP)
+   =========================== */
 
-  color: azure;
+.userMenu {
+  display: flex;
+  align-items: center;
+
+  button[mat-button] {
+    font-weight: 500;
+    color: azure;
+  }
 }
 
+/* ===========================
+   HAMBURGER (MOBILE TRIGGER)
+   =========================== */
+
+.header-nav-container__hamburger {
+  display: none; // will be shown in media query later
+  color: azure;
+
+  mat-icon {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Hide desktop nav */
+  .header-nav-container {
+    display: none;
+  } /* Show hamburger */
+  .header-nav-container__hamburger {
+    display: block;
+  }
+  .header-wrapper {
+    padding: 10px 12px;
+  }
+}
+
+/* ===========================
+   User Toolbar
+   =========================== */
 .user-toolbar {
   display: flex;
   justify-content: space-between;
@@ -40,12 +104,7 @@
     font-size: 1rem;
   }
 
-  .spacer {
-    flex: 1;
-  }
-
   button[mat-button] {
-
     font-weight: 500;
   }
 }
