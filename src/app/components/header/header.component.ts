@@ -21,6 +21,10 @@ export class HeaderComponent {
   isAuthenticated$ = this.store.select(selectIsAuthenticated);
   user$ = this.store.select(selectUser);
 
+  toggleMenu() {
+    console.log('toggle');
+  }
+
   logout() {
     this.authService
       .logout()

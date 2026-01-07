@@ -1,0 +1,22 @@
+<div class="total-card">
+  <div class="total-card__summary">
+    <div class="total-card__column total-card__column--income">
+      <div class="total-card__label">Total Income:</div>
+      <div class="total-card__value">
+        {{ transactionSummary.totalIncome | currency:'EUR':'symbol':'1.2-2' }}
+      </div>
+    </div>
+    <div class="total-card__column total-card__column--expense">
+      <div class="total-card__label">Total Expense:</div>
+      <div class="total-card__value">
+        {{ transactionSummary.totalExpense | currency:'EUR':'symbol':'1.2-2' }}
+      </div>
+    </div>
+    <div class="total-card__column total-card__column--balance">
+      <div class="total-card__label">Net Balance:</div>
+      <div class="total-card__value">
+        {{ transactionSummary.netBalance | currency:'EUR':'symbol':'1.2-2' }}
+      </div>
+    </div>
+  </div>
+</div>

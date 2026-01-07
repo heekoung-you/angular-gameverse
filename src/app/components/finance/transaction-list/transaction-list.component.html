@@ -1,0 +1,106 @@
+<div class="transaction-list-container">
+  <!-- Desktop View Table -->
+  <table class="transaction-list-table desktop-view">
+    <thead>
+      <tr class="transaction-list-table__header-row">
+        <th (click)="sortBy('date')" class="transaction-list-table__header-cell">
+          Date
+          <mat-icon class="transaction-list-table__header-icon">
+            {{ getSortIcon('date') }}
+          </mat-icon>
+        </th>
+        <th (click)="sortBy('desc')" class="transaction-list-table__header-cell">
+          Description
+          <mat-icon class="transaction-list-table__header-icon">
+            {{ getSortIcon('desc') }}
+          </mat-icon>
+        </th>
+        <th (click)="sortBy('category')" class="transaction-list-table__header-cell">Category
+          <mat-icon class="transaction-list-table__header-icon">
+            {{ getSortIcon('category') }}
+          </mat-icon>
+        </th>
+        <th (click)="sortBy('type')" class="transaction-list-table__header-cell">Type
+          <mat-icon class="transaction-list-table__header-icon">
+            {{ getSortIcon('type') }}
+          </mat-icon>
+        </th>
+        <th (click)="sortBy('amount')" class="transaction-list-table__header-cell">
+          Amount
+          <mat-icon class="transaction-list-table__header-icon">
+            {{ getSortIcon('amount') }}
+          </mat-icon>
+        </th>
+        <th class="transaction-list-table__header-cell transaction-list-table__header-cell--not-sortable">
+          Payment Method
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (transaction of sortedTransactions; track transaction.id) {
+        <tr class="transaction-list-table__row">
+          <td class="transaction-list-table__date">
+            {{ formattedDate(transaction) }}
+          </td>
+          <td class="transaction-list-table__desc">
+            {{ transaction.desc }}
+          </td>
+          <td class="transaction-list-table__category">
+            {{ transaction.category }}
+          </td>
+          <td class="transaction-list-table__type">
+            {{ transaction.type }}
+          </td>
+          <td class="transaction-list-table__amount" [ngClass]="getAmountClass(transaction.type)">
+            €{{ transaction.amount.toFixed(2) }}
+          </td>
+          <td class="transaction-list-table__payment">
+            {{ transaction.payment.method }}
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <!-- Mobile View with Expandable Cards -->
+  <div class="mobile-transaction-list">
+    @for (transaction of sortedTransactions; track transaction.id) {
+      <div class="transaction-card" [class.expanded]="isRowExpanded(transaction.id)">
+        <!-- Main Row - Always Visible -->
+        <div class="transaction-card__main" (click)="toggleRowExpand(transaction.id)" tabindex="0" role="button">
+          <div class="transaction-card__description">{{ transaction.desc }}</div>
+          <div class="transaction-card__amount-row">
+            <div class="transaction-card__amount" [ngClass]="getAmountClass(transaction.type)">
+              €{{ transaction.amount.toFixed(2) }}
+            </div>
+            <mat-icon class="transaction-card__expand-icon">
+              {{ isRowExpanded(transaction.id) ? 'expand_less' : 'expand_more' }}
+            </mat-icon>
+          </div>
+          <div class="transaction-card__date">{{ formattedShortDate(transaction) }}</div>
+        </div>
+
+        <!-- Expanded Details -->
+        <div class="transaction-card__details">
+          <div class="transaction-card__detail">
+            <span class="transaction-card__detail-label">Date:</span>
+            <span class="transaction-card__detail-value">{{ formattedDate(transaction) }}</span>
+          </div>
+          <div class="transaction-card__detail">
+            <span class="transaction-card__detail-label">Category:</span>
+            <span class="transaction-card__detail-value">{{ transaction.category }}</span>
+          </div>
+          <div class="transaction-card__detail">
+            <span class="transaction-card__detail-label">Type:</span>
+            <span class="transaction-card__detail-value">{{ transaction.type }}</span>
+          </div>
+          <div class="transaction-card__detail">
+            <span class="transaction-card__detail-label">Payment:</span>
+            <span class="transaction-card__detail-value">{{ transaction.payment.method }}</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

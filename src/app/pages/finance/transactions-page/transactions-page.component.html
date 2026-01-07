@@ -1,0 +1,27 @@
+<div class="transactions-page">
+  <h1 class="page-title">Transactions</h1>
+
+  <div class="content-grid">
+    <!-- Left column -->
+
+
+    <section class="totals-card">
+      <app-totals-card [transactions]="transactions()"></app-totals-card>
+
+
+    </section>
+    <section class="filter-bar">
+      <app-filter-bar (filterChanged)="onFilterChanged($event)"></app-filter-bar>
+    </section>
+
+    <section class="results">
+      <section class="transaction-list">
+        <h2>Transactions</h2>
+        <app-transaction-list [transactions]="transactions()"></app-transaction-list>
+
+      </section>
+      <section class="detail-view">Detail View</section>
+    </section>
+    <!-- Right column -->
+  </div>
+</div>

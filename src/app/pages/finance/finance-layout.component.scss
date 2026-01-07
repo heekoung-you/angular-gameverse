@@ -1,0 +1,41 @@
+.finance-app{
+
+  &__layout{
+
+    //display: grid;
+    //grid-template-rows: 1fr, auto;
+
+  }
+
+  &__nav{
+      position: sticky;
+      top:3rem;
+      display: flex;
+      background-color: var(--bg-color);
+      flex-direction: row;
+      justify-content: space-around;
+      z-index: 1000;
+      gap: 1rem;
+      padding: 0.5rem;
+      &__active{
+        font-weight: bold;
+        border-bottom: 2px solid var(--accent-color);
+    }
+  }
+
+  &__nav-link {
+    font-weight: 1.2rem;
+    &--active {
+      font-weight: bold;
+      border-bottom: 2px solid var(--accent-color);
+    }
+
+    &:hover {
+      color: var(--accent-hover);
+    }
+  }
+
+  &__main{
+    position: relative;
+  }
+}

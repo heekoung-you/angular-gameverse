@@ -1,0 +1,181 @@
+// Container styles with responsive behavior
+.transaction-list-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Basic table styles that apply to both mobile and desktop
+.transaction-list-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+  }
+
+  th {
+    text-align: left;
+    font-weight: 600;
+  }
+
+  &__header-cell {
+    align-items: center;
+    &:not(.transaction-list-table__header-cell--not-sortable) {
+      cursor: pointer;
+      &:hover {
+        color: var(--accent-hover);
+      }
+    }
+  }
+
+  &__header-icon {
+    vertical-align: bottom;
+    font-size: 1.2rem;
+    margin-left: 0.25rem;
+  }
+
+  &__row:hover {
+    background-color: var(--table-row-hover);
+  }
+
+  // Style amounts based on positive/negative
+  .amount-positive {
+    color: var(--success-color, #2e7d32);
+  }
+
+  .amount-negative {
+    color: var(--error-color, #c62828);
+  }
+}
+
+// Mobile view specific styles
+.mobile-transaction-list {
+  display: none;
+}
+
+// Card styles for mobile transactions
+.transaction-card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  // Main part of card (always visible)
+  &__main {
+    padding: 1rem;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "desc amount"
+      "date amount";
+    align-items: center;
+  }
+
+  // Description styling
+  &__description {
+    grid-area: desc;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // Date styling
+  &__date {
+    grid-area: date;
+    font-size: 0.85rem;
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
+  }
+
+  // Amount row styling
+  &__amount-row {
+    grid-area: amount;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  // Amount styling
+  &__amount {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: right;
+    &.amount-positive {
+      color: var(--success-color, #2e7d32);
+    }
+
+    &.amount-negative {
+      color: var(--error-color, #c62828);
+    }
+  }
+
+  // Icon for expand/collapse
+  &__expand-icon {
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+  }
+
+  // Expanded details container
+  &__details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  // Individual detail row
+  &__detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  }
+
+  // Detail labels
+  &__detail-label {
+    font-weight: 500;
+    color: var(--text-secondary, rgba(255, 255, 255, 0.6));
+  }
+
+  // Detail values
+  &__detail-value {
+    font-weight: 500;
+  }
+
+  // When card is expanded
+  &.expanded {
+    .transaction-card__details {
+      max-height: 250px; // Large enough for most contents
+    }
+
+    .transaction-card__expand-icon {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+// Media queries for responsive design
+@media (max-width: 768px) {
+  // Hide desktop table view on mobile
+  .desktop-view {
+    display: none;
+  }
+
+  // Show mobile card view
+  .mobile-transaction-list {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  // Hide mobile view on desktop
+  .mobile-transaction-list {
+    display: none;
+  }
+}

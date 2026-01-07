@@ -4,12 +4,29 @@
       <a routerLink="/games">Games Library</a>
     </div>
 
-    <div class="header-search">
-      <!-- TODO Placeholder -->
-      <p>Search</p>
-    </div>
+
+    <!-- Mobile View -->
+    <button class="header-nav-container__hamburger" matIconButton [matMenuTriggerFor]="mobileMenu"
+      aria-label="Example icon-button with a menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #mobileMenu="matMenu">
+      <a mat-menu-item class=" header-nav-link" routerLink="/games">Games</a>
+      <a mat-menu-item class="header-nav-link" routerLink="/finance">Finance</a>
+      <a mat-menu-item class="header-nav-link" routerLink="/inventory">Inventory</a>
+      <a mat-menu-item class="header-nav-link" routerLink="/ngrx">NgRx</a>
+      <a mat-menu-item class="header-nav-link" routerLink="/color-picker">ColorPicker</a>
+      <a mat-menu-item class="header-nav-link" routerLink="/images">Images</a>
+      <div mat-menu-item disabled>
+        <mat-icon></mat-icon>
+      </div>
+    </mat-menu>
+
+    <!-- Desktop View -->
     <nav class="header-nav-container">
       <a class="header-nav-link" routerLink="/games">Games</a>
+      <a class="header-nav-link" routerLink="/finance">Finance</a>
+      <a class="header-nav-link" routerLink="/finance/transactions">Transactions</a>
       <a class="header-nav-link" routerLink="/ngrx">NgRx</a>
       <a class="header-nav-link" routerLink="/color-picker">ColorPicker</a>
       <a class="header-nav-link" routerLink="/images">Images</a>
@@ -17,9 +34,9 @@
       <div class="userMenu">
         <!--TODO : Create menu come with click - profile / logout etc -->
         @if((isAuthenticated$ | async) !== null && (user$ | async) !== null) {
-          <button matButton [matMenuTriggerFor]="menu">Welcome,
+          <button matButton [matMenuTriggerFor]="menuUserProfile">Welcome,
             {{ (user$ | async)?.displayName || (user$ | async)?.email}}</button>
-          <mat-menu #menu="matMenu">
+          <mat-menu #menuUserProfile="matMenu">
             <button mat-menu-item [routerLink]="'/my-page'">
               <mat-icon>account_box</mat-icon>
               <span>Collections</span>

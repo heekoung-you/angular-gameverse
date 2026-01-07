@@ -1,7 +1,6 @@
 import { Component, effect, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { AuthSyncService } from './core/services/auth.sync.service';
 import { AuthService } from './core/services/auth.service';
 import { AuthUserDto } from './models/user.model';
@@ -10,7 +9,7 @@ import { loginSuccess, logout } from './store/auth.actions';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, SidebarComponent],
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

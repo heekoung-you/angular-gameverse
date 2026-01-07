@@ -1,0 +1,63 @@
+$card-bg: #1e1e1e;
+
+.total-card {
+  background-color: var(--card-bg);
+  border-radius: 5px;
+  padding: 1rem;
+
+
+  &__header {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  &__summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: stretch;
+
+    @media screen and (max-width:600px) {
+      flex-direction: column;
+
+    }
+  }
+
+  &__column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    &--income .total-card__value {
+      color: #2e7d32; // green
+    }
+
+    &--expense .total-card__value {
+      color: #c62828; // red
+    }
+
+    &--balance .total-card__value {
+      color: #1565c0; // blue
+    }
+  }
+
+  &__label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: #444;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+  }
+
+  &__value {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+}
