@@ -6,30 +6,27 @@
   border-radius: 6px;
   text-align: center;
   box-sizing: border-box;
-  min-height: 280px;
-  width:260px;
   flex-shrink: 1;
   overflow: hidden;
 
-  .game-title{
+  .game-title {
     h3 {
       //margin: 0.4rem 0;
       font-size: 1rem;
       font-weight: bold;
       line-height: 1;
     }
-     .favorite{
-      color:var(--accent-inactive);
-      &.active{
-        color:var(--accent-active);
+    .favorite {
+      color: var(--accent-inactive);
+      &.active {
+        color: var(--accent-active);
       }
-        &:hover{
+      &:hover {
         scale: 1.2;
         color: var(--accent-hover);
       }
     }
   }
-
 
   img {
     width: 100%;
@@ -40,7 +37,7 @@
   }
 
   &:hover {
-    transform:scale(1.05);
+    transform: scale(1.05);
   }
 
   &:hover .extra-info {
@@ -54,7 +51,7 @@
   }
 
   button[matButton] {
-    width:100%;
+    width: 100%;
     background-color: #44474e;
 
     mat-icon {
@@ -62,7 +59,6 @@
     }
   }
 }
-
 
 /* Auto Generated style */
 .skeleton {
@@ -108,7 +104,13 @@
 }
 
 @keyframes pulse {
-  0% { background-color: #2a2d33; }
-  50% { background-color: #3a3d44; }
-  100% { background-color: #2a2d33; }
+  0% {
+    background-color: #2a2d33;
+  }
+  50% {
+    background-color: #3a3d44;
+  }
+  100% {
+    background-color: #2a2d33;
+  }
 }

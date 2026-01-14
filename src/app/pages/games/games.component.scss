@@ -1,18 +1,53 @@
+// Main container to unify all widths
+.games-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  // Ensure consistent spacing for all child elements
+  > * {
+    margin-bottom: 1rem;
+  }
+
+  // Page info text styling
+  p {
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+  }
+}
+
 .game-list {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  justify-content: center;
-  padding: 1rem;
 
+  justify-content: flex-start;
+  padding: 1rem 0; // Remove horizontal padding
+  width: 100%;
+
+  // Responsive behavior
+  @media (max-width: 1200px) {
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    gap: 0.75rem;
+  }
 }
-.game-genres-wrapper{
-  display: inline-block;
+.game-genres-wrapper {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
   &.hidden {
     display: none !important;
   }
   .game-genres {
-    display: inline-block;
+    display: block;
+    width: 100%;
     margin: 0.5rem 0 0 0;
     max-height: 3rem;
     overflow: hidden;
@@ -20,7 +55,7 @@
       max-height: none;
     }
 
-    .genre-button{
+    .genre-button {
       background-color: #ff00aa1a;
       font-size: small;
       margin: 0.5rem;
@@ -49,9 +84,7 @@
       font-weight: normal;
     }
   }
-
 }
-
 
 .loader-wrapper {
   position: relative;
@@ -60,22 +93,22 @@
   justify-content: center;
   align-items: center;
   .loader {
-      width: 48px;
-      height: 48px;
-      border: 5px solid #FFF;
-      border-bottom-color: transparent;
-      border-radius: 50%;
-      animation: rotation 1s linear infinite;
-    }
+    width: 48px;
+    height: 48px;
+    border: 5px solid #fff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    animation: rotation 1s linear infinite;
+  }
 
-    @keyframes rotation {
-      0% {
-          transform: rotate(0deg);
-      }
-      100% {
-          transform: rotate(360deg);
-      }
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
     }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 .error-message {

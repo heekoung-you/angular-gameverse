@@ -11,19 +11,19 @@
   .content-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr;
+    //grid-template-rows: subgrid;
     gap: 1.5rem;
     grid-template-areas:
-      "summary filter"
-      "results results" ;
+      'summary filter'
+      'results results';
 
-  // Mobile view - stack all elements vertically
+    // Mobile view - stack all elements vertically
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
       grid-template-areas:
-        "summary"
-        "filter"
-        "results";
+        'summary'
+        'filter'
+        'results';
     }
 
     // Top row spans both columns
@@ -34,9 +34,11 @@
         grid-area: summary;
         padding: 1rem;
         border-radius: 4px;
+        display: grid;
       }
 
       .filter-bar {
+        display: grid;
         grid-area: filter;
         border: 1px solid #ddd;
         padding: 1rem;
@@ -56,14 +58,14 @@
       border-radius: 4px;
       // Results under summary (left column)
       .transaction-list {
-        width:100%;
+        width: 100%;
         //grid-template-columns: 1;
         table {
           width: 100%;
           border-collapse: collapse;
 
-
-          th, td {
+          th,
+          td {
             padding: 0.5rem;
             border-bottom: 1px solid white;
           }
@@ -73,12 +75,30 @@
             font-weight: 600;
           }
 
-          th:nth-child(1), td:nth-child(1) { width: 15%; }  /* Date */
-          th:nth-child(2), td:nth-child(2) { width: 25%; }  /* Description */
-          th:nth-child(3), td:nth-child(3) { width: 15%; }  /* Category */
-          th:nth-child(4), td:nth-child(4) { width: 10%; }  /* Type */
-          th:nth-child(5), td:nth-child(5) { width: 20%; }  /* Amount */
-          th:nth-child(6), td:nth-child(6) { width: 15%; }  /* Payment Method */
+          th:nth-child(1),
+          td:nth-child(1) {
+            width: 15%;
+          } /* Date */
+          th:nth-child(2),
+          td:nth-child(2) {
+            width: 25%;
+          } /* Description */
+          th:nth-child(3),
+          td:nth-child(3) {
+            width: 15%;
+          } /* Category */
+          th:nth-child(4),
+          td:nth-child(4) {
+            width: 10%;
+          } /* Type */
+          th:nth-child(5),
+          td:nth-child(5) {
+            width: 20%;
+          } /* Amount */
+          th:nth-child(6),
+          td:nth-child(6) {
+            width: 15%;
+          } /* Payment Method */
         }
       }
     }
