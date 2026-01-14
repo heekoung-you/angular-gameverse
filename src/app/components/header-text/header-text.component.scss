@@ -2,9 +2,11 @@
   padding: 1rem;
   border-radius: 9px;
   background-color: rgba(53, 235, 16, 0.8);
-  background:linear-gradient(10deg,blue,purple);
+  background: linear-gradient(10deg, blue, purple);
   font-weight: bolder;
-  display: inline-block;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
 }
 .promo-close-button {
   cursor: pointer;
@@ -20,22 +22,20 @@
 
   gap: 0.5rem;
 
-
   h1 {
     font-size: 1.8rem;
-
-  }
-
-  mat-icon {
-    //flex-shrink: 0;
-    cursor: pointer;
-    &:hover {
-      color: #2196f3; // highlight color on hover
-      transform: scale(1.2); // optional: slight zoom
-    }
   }
 }
 
+// Add wrapper to match games page container
+:host {
+  display: block;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
 
 .header-container h3 {
   font-size: 0.8rem;

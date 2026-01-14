@@ -1,4 +1,4 @@
-@use "tailwindcss";
+@use 'tailwindcss';
 // Include theming for Angular Material with `mat.theme()`.
 // This Sass mixin will define CSS variables that are used for styling Angular Material
 // components according to the Material 3 design spec.
@@ -7,14 +7,16 @@
 @use '@angular/material' as mat;
 
 html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
 }
 
 body {
@@ -42,14 +44,16 @@ body {
   --accent-color: #8941e2;
   --accent-hover: #6923be;
   --accent-active: #9c6de0;
-  --table-row-hover:#9c6de0;
+  --table-row-hover: #9c6de0;
 }
 
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: 'Quicksand', sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 body {
@@ -58,7 +62,9 @@ body {
   font-family: 'Quicksand', sans-serif;
   margin: 0;
   padding: 0;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* Global link styles */
@@ -66,7 +72,9 @@ a {
   color: var(--accent-color);
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease, text-decoration 0.3s ease;
+  transition:
+    color 0.3s ease,
+    text-decoration 0.3s ease;
 }
 
 a:hover {
@@ -96,8 +104,8 @@ a:visited {
   background-color: var(--bg-color);
   height: 3rem;
   z-index: 1000;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
 }
 
 footer {
@@ -110,7 +118,7 @@ footer {
 
 .layout {
   position: relative;
-  top:3rem;
+  top: 3rem;
   display: flex;
   flex: 1;
 }
@@ -120,17 +128,16 @@ footer {
   padding: 1rem;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
+input[type='text'],
+input[type='email'],
+input[type='password'],
 select {
-  border:1px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 0.5rem;
   padding: 0.3rem 0.5rem;
   background-color: var(--card-bg); // dark background
-  color: var(--text-color);         // light text
+  color: var(--text-color); // light text
 }
-
 
 input:hover {
   border-color: #007bff;
@@ -154,11 +161,16 @@ button,
   text-decoration: none;
 }
 
-
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
   opacity: 0.6;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
