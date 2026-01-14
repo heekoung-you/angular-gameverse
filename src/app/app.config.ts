@@ -19,6 +19,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { itemReducer } from './features/ngrx-test/store/item.reducer';
 import { ItemEffects } from './features/ngrx-test/store/item.effects';
 import { provideEffects } from '@ngrx/effects';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,6 +42,9 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode(), trace: true, traceLimit: 25 }),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode(), trace: true, traceLimit: 25 }), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 };
