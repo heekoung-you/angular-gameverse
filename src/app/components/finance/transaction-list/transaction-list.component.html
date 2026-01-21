@@ -39,7 +39,7 @@
 
     <tbody>
       @for (transaction of sortedTransactions; track transaction.id) {
-        <tr class="transaction-list-table__row">
+        <tr class="transaction-list-table__row" (dblclick)="selectTransaction(transaction, $event)">
           <td class="transaction-list-table__date">
             {{ formattedDate(transaction) }}
           </td>
@@ -66,7 +66,8 @@
   <!-- Mobile View with Expandable Cards -->
   <div class="mobile-transaction-list">
     @for (transaction of sortedTransactions; track transaction.id) {
-      <div class="transaction-card" [class.expanded]="isRowExpanded(transaction.id)">
+      <div class="transaction-card" [class.expanded]="isRowExpanded(transaction.id)"
+        (dblclick)="selectTransaction(transaction, $event)">
         <!-- Main Row - Always Visible -->
         <div class="transaction-card__main" (click)="toggleRowExpand(transaction.id)" tabindex="0" role="button">
           <div class="transaction-card__description">{{ transaction.desc }}</div>

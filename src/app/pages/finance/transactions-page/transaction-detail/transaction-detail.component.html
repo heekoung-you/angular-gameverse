@@ -1,0 +1,52 @@
+<div mat-dialog-content class="transaction-detail">
+  <h2 mat-dialog-title class="transaction-detail__title">Edit Transaction</h2>
+  <form [formGroup]="detailFrom" class="transaction-detail__form">
+
+    <mat-form-field class="transaction-detail__field" appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="desc" />
+    </mat-form-field>
+
+    <mat-form-field class="transaction-detail__field" appearance="fill">
+      <mat-label>Date</mat-label>
+      <input matInput type="date" formControlName="date" readonly="true" />
+    </mat-form-field>
+
+    <mat-form-field class="transaction-detail__field" appearance="fill" [ngClass]="{
+        'transaction-detail__field--income': detailFrom.value.type === 'income',
+        'transaction-detail__field--expense': detailFrom.value.type === 'expense'
+        }">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" formControlName="amount"
+        [style.color]="detailFrom.value.type === 'income' ? 'green' : 'red'" />
+    </mat-form-field>
+
+    <mat-form-field class="transaction-detail__field" appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type">
+        @for( opt of typeOptions;  track $index){
+          <mat-option [value]="opt.value">
+            {{ opt.label }}
+          </mat-option>
+        }
+
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="transaction-detail__field" appearance="fill">
+      <mat-label>Payment Method</mat-label>
+      <mat-select formControlName="paymentMethod">
+        @for( opt of paymentMethodOptions; track $index){
+          <mat-option [value]="opt.value">
+            {{ opt.label }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+  <div mat-dialog-actions class="transaction-detail__actions">
+    <button mat-button (click)="closeDialog()">Cancel</button>
+    <button mat-button color="primary">Save</button>
+  </div>
+</div>
