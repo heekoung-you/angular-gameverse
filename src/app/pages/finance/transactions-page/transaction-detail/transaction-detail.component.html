@@ -45,8 +45,12 @@
     </mat-form-field>
 
   </form>
+  <div class="transaction-details__errors">
+
+
+  </div>
   <div mat-dialog-actions class="transaction-detail__actions">
     <button mat-button (click)="closeDialog()">Cancel</button>
-    <button mat-button color="primary">Save</button>
+    <button mat-button color="primary" (click)="saveDetail()">Save</button>
   </div>
 </div>

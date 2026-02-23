@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { toDateInputValue } from '../../../../core/utils/date-utils';
 @Component({
   selector: 'app-transaction-detail',
   imports: [CommonModule, MatInputModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule],
@@ -40,26 +41,36 @@ export class TransactionDetailComponent {
 
   setForm() {
     const t = this.data.transaction;
-    console.log('setForm', t);
+
     this.detailFrom = this.fb.group({
       desc: [t.desc, Validators.required],
-      amount: [t.amount, Validators.required],
+      amount: [t.amount, [Validators.required, Validators.min(0)]],
       type: [t.type, Validators.required],
-      category: [t.category],
-      date: [this.toDateInputValue(t.date)],
+      category: [t.category, Validators.required],
+      date: [toDateInputValue(t.date)],
       paymentMethod: [t.payment.method, Validators.required],
     });
-
-    console.log('detailForm-', this.detailFrom.controls['date']);
-  }
-
-  // Move To Helper
-  toDateInputValue(date: Date | string): string {
-    const d = new Date(date);
-    return d.toISOString().split('T')[0]; // "YYYY-MM-DD"
   }
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  isUnchanged(): boolean {
+    console.log(JSON.stringify(this.detailFrom.value));
+    console.log(JSON.stringify(this.transaction));
+    return JSON.stringify(this.detailFrom.value) === JSON.stringify(this.transaction);
+  }
+
+  isFormValid(): boolean {
+    return this.detailFrom.valid;
+  }
+
+  saveDetail() {
+    console.log('isUnchanged:', this.isUnchanged(), 'formDetail:', this.detailFrom);
+    // TODO
+    // its mock data -
+    // Show message and close dialog
+    //this.closeDialog();
   }
 }

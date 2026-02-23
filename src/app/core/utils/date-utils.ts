@@ -17,3 +17,8 @@ export function formatDate(dateInput: string | Date, options?: DateFormatOptions
   const style = options?.style ?? DEFAULT_STYLE;
   return new Intl.DateTimeFormat(locale, { dateStyle: style }).format(date);
 }
+
+export function toDateInputValue(date: Date | string): string {
+  const d = new Date(date);
+  return d.toISOString().split('T')[0]; // "YYYY-MM-DD"
+}
