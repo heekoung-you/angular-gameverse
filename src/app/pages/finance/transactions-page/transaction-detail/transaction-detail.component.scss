@@ -1,0 +1,50 @@
+:host {
+  display: block;
+}
+
+h2 {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.transaction-detail {
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+
+  &__row {
+    display: flex;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+
+  &__field {
+    display: block;
+
+    &__value {
+      flex: 0 0 70%;
+    }
+  }
+
+  &__label {
+    flex: 0 0 30%;
+    font-weight: 600;
+    color: var(--accent-inactive);
+  }
+
+  &__value {
+    flex: 0 0 70%;
+  }
+}

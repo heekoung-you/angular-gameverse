@@ -1,8 +1,9 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Transaction } from '../../../models/finance/transaction.model';
 import { formatDate } from '../../../core/utils/date-utils';
 import { MatIconModule } from '@angular/material/icon';
+import { TransactionStateService } from '../../../core/services/finance/transaction-state.service';
 
 @Component({
   selector: 'app-transaction-list',
@@ -11,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './transaction-list.component.scss',
 })
 export class TransactionListComponent implements OnInit, OnChanges {
+  private transactionStateService = inject(TransactionStateService);
   @Input() transactions: Transaction[] = [];
   @Input() locale = 'de-DE';
   sortedTransactions: Transaction[] = [];
@@ -93,5 +95,16 @@ export class TransactionListComponent implements OnInit, OnChanges {
 
   getAmountClass(type: string): string {
     return type === 'income' ? 'amount-positive' : 'amount-negative';
+  }
+
+  /**
+   * Selects a transaction when clicked
+   * Updates the selected transaction in the TransactionStateService
+   */
+  selectTransaction(transaction: Transaction, event?: Event): void {
+    if (event) {
+      event.stopPropagation(); // Prevent other click events from firing
+    }
+    this.transactionStateService.selectTransaction(transaction);
   }
 }
